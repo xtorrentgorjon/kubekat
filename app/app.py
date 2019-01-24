@@ -21,9 +21,14 @@ def add_header(response):
 def application():
     #request.args.get('xxx')
     lc = label_checker(["namespace1", "namespace2", "namespace3"])
+    kq = kubernetes_query()
     apps_with_missing_labels = lc.check_all_namespaces()
     app.logger.info('Detected apps: %s', apps_with_missing_labels)
-    return render_template('index.html', var1="sjaakhazelollie", applist=apps_with_missing_labels)
+
+    answer = str(kq.query())
+
+    #return render_template('index.html', var1="sjaakhazelollie", applist=apps_with_missing_labels)
+    return render_template('index.html', var1=answer, applist=apps_with_missing_labels)
 
 
 if __name__ == "__main__":
