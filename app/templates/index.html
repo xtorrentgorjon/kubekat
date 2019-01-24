@@ -11,13 +11,11 @@
     <th>Namespace</th>
     <th>Application Name</th>
   </tr>
-  {% for namespace in applist %}
-  {% for app in namespace %}
+  {% for app in applist %}
   <tr>
     <td>{{app[0]}}</td>
     <td>{{app[1]}}</td>
   </tr>
-  {% endfor %}
   {% endfor %}
   </table>
 </body>
