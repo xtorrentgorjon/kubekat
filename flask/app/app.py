@@ -9,8 +9,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--debug', '-d', help="Run in debug mode.", action='store_true')
 args = parser.parse_args()
 
-lc = label_checker(["namespace1", "namespace2", "namespace3"])
-
 # This function prevents Flask from telling the browser to cache images indefinitely
 @app.after_request
 def add_header(response):
@@ -22,7 +20,9 @@ def add_header(response):
 @app.route("/")
 def application():
     #request.args.get('xxx')
+    lc = label_checker(["namespace1", "namespace2", "namespace3"])
     apps_with_missing_labels = lc.check_all_namespaces()
+    app.logger.info('Detected apps: %s', apps_with_missing_labels)
     return render_template('index.html', var1="sjaakhazelollie", applist=apps_with_missing_labels)
 
 
