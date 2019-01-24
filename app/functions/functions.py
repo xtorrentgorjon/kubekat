@@ -8,8 +8,8 @@ class label_checker():
         output = [\
         [namespace, "app1"],\
         [namespace, "app2"],\
-        [namespace, "app3"]\
-        ]
+        [namespace, "app3"]]
+        
         self.__resources_without_label.append(output)
 
     def check_all_namespaces(self):
