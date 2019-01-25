@@ -3,33 +3,48 @@ from kubernetes import client, config, watch
 class kubernetes_query():
     def __init__(self):
         self.__config = config.load_incluster_config()
-    def query(self, namespace):
-        api = client.AppsV1beta1Api()
-        deployment_list = api.list_namespaced_deployment(namespace)
-        return deployment_list
+        self.__resources_without_label = []
+
+    def list_deployments_in_namespace(self, namespace):
+        api = client.AppsV1Api()
+        output = api.list_namespaced_deployment(namespace)
+
+        for deployment in output.items:
+            namespace = str(deployment.metadata.namespace)
+            name = str(deployment.metadata.name)
+            out_deployment = [namespace, name]
+            self.__resources_without_label.append(out_deployment)
+        return self.__resources_without_label
+
+
+    def list_namespaces(self):
+        api = client.CoreV1Api()
+        output = api.list_namespace()
+        namespace_list = []
+        for namespace in output.items:
+            namespace_list.append(str(namespace.metadata.name))
+        return namespace_list
+
 
 class label_checker():
-    def __init__(self, namespaces, app):
-        self.__resources_with_label = []
-        self.__resources_without_label = []
-        self.__namespaces = namespaces
+    def __init__(self, app):
         self.app = app
 
     def check_namespace(self, namespace):
         kq = kubernetes_query()
-        output = kq.query(namespace)
+        output = kq.list_deployments_in_namespace(namespace)
+        return output
 
-        for deployment in output.items:
-            out_deployment = [str(deployment.metadata.namespace),str(deployment.metadata.name)]
-            self.__resources_without_label.append(out_deployment)
-        #out_deployment = [output["items"][0]["metadata"]["namespace"], output["items"][0]["metadata"]["name"]]
-        #out_deployment = [str(output.items[0].metadata.namespace), "NAME"]
-        #self.app.logger.info('%s', out_deployment[0])
-        #self.__resources_without_label.append(out_deployment)
 
     def check_all_namespaces(self):
-        for namespace in self.__namespaces:
-            self.app.logger.info('CHECKING NAMESPACE %s', namespace)
-            self.check_namespace(namespace)
+        deployments_in_namespace = []
+        kq = kubernetes_query()
+        output = kq.list_namespaces()
+        self.app.logger.info('Namespace list: %s', output)
 
-        return self.__resources_without_label
+        for namespace in output:
+            self.app.logger.info('CHECKING NAMESPACE %s', namespace)
+            deployments_in_namespace.append(self.check_namespace(namespace))
+            self.app.logger.info('Apps checked so far: %s', deployments_in_namespace)
+
+        return deployments_in_namespace
