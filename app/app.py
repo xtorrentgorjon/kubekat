@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template
+from flask_wtf import Form
 
 from functions.functions import *
 import argparse
@@ -16,14 +17,18 @@ def add_header(response):
         response.headers['Cache-Control'] = 'no-store'
     return response
 
+class Filter_Form(Form):
+   name = TextField("filter")
+
 # Main
-@app.route("/")
+@app.route("/", methods = ['GET', 'POST'])
 def application():
+    form = Filter_Form()
     lc = label_checker(app)
     apps_with_missing_labels = lc.check_all_namespaces()
     app.logger.info('Detected apps: %s', apps_with_missing_labels)
 
-    return render_template('index.html', var1="sjaakhazelollie", namespacelist=apps_with_missing_labels)
+    return render_template('index.html', form = form, namespacelist=apps_with_missing_labels)
 
 
 if __name__ == "__main__":
