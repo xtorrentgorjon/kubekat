@@ -10,14 +10,16 @@
   <tr>
     <th>Namespace</th>
     <th>Deployment Name</th>
+    <th>Labels</th>
+    <th>Status</th>
   </tr>
-  {% for namespace in namespacelist %}
-  {% for app in namespace %}
+  {% for app in namespacelist %}
   <tr>
-    <td>{{app[0]}}</td>
-    <td>{{app[1]}}</td>
+    <td>{{app.namespace}}</td>
+    <td>{{app.name}}</td>
+    <td>{{app.labels}}</td>
+    <td>&#x2705; &#x274E;</td>
   </tr>
-  {% endfor %}
   {% endfor %}
   </table>
 
