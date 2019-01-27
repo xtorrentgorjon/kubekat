@@ -4,6 +4,8 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+
+
   <div class="topmenu">
     <ul>
       <li><img src="{{url_for('static', filename='images/cat-icon.png')}}" /></li>
@@ -14,6 +16,18 @@
   </div>
 
   <div class="mainpage">
+    <h1>{{filter}}</h1>
+    <form action = "http://192.168.99.100:32197/" method = post>
+       <fieldset>
+          {{ form.hidden_tag() }}
+          <div>
+             {{ form.name }}
+             {{ form.submit }}
+          </div>
+       </fieldset>
+    </form>
+
+
   <h1> Correct deployments </h1>
 
   <table>
