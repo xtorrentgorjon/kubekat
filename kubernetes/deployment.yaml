@@ -3,6 +3,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kubernetes-label-checker
+  labels:
+    app: kubernetes-label-checker
+    sla: "critical"
+    maintainer: "Sjaak_S_PhD"
+    team: "Katten"
 spec:
   selector:
     matchLabels:
@@ -18,37 +23,3 @@ spec:
         image: sendotux/kubernetes-label-checker:latest
         ports:
         - containerPort: 5000
----
-- apiVersion: v1
-  kind: Service
-  metadata:
-    labels:
-      app: kubernetes-label-checker
-    name: kubernetes-label-checker
-  spec:
-    ports:
-    - name: http
-      port: 80
-      protocol: TCP
-      targetPort: 5000
-    selector:
-      app: kubernetes-label-checker
-    type: ClusterIP
-kind: List
-metadata:
-  resourceVersion: ""
-  selfLink: ""
---
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: kubernetes-label-checker
-spec:
-  rules:
-  - host: kubernetes-label-checker.domain.io
-    http:
-      paths:
-      - backend:
-          serviceName: kubernetes-label-checker
-          servicePort: 80
-        path: /
