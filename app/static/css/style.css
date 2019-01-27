@@ -1,3 +1,38 @@
+/* Top menu CSS */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  padding-left:10%;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+li {
+  float: left;
+}
+
+li:last-child {
+  padding-right:20%;
+  float: right;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+/* Table menu CSS */
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -10,4 +45,32 @@ td, th {
 }
 tr:nth-child(even) {
   background-color: #dddddd;
+}
+
+.column1 {
+ width: 15%;
+}
+
+.column2 {
+ width: 20%;
+}
+
+.column3 {
+ width: 60%;
+}
+
+.column4 {
+ width: 5%;
+}
+
+/* Page CSS */
+
+.topmenu {
+}
+
+.mainpage {
+  margin-top:60px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
 }

@@ -20,10 +20,13 @@ def add_header(response):
 @app.route("/")
 def application():
     lc = label_checker(app)
-    apps_with_missing_labels = lc.check_all_namespaces()
-    app.logger.info('Detected apps: %s', apps_with_missing_labels)
+    deployments = lc.check_all_namespaces()
+    lc.filter_deployment_by_label(["sla"])
+    app.logger.info('Detected apps: %s', deployments)
+    correct_deployments = lc.get_correct_deployments()
+    incorrect_deployments = lc.get_incorrect_deployments()
 
-    return render_template('index.html', var1="sjaakhazelollie", namespacelist=apps_with_missing_labels)
+    return render_template('index.html', correct_deployments=correct_deployments, incorrect_deployments=incorrect_deployments)
 
 
 if __name__ == "__main__":
