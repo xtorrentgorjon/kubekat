@@ -39,11 +39,14 @@ class label_checker():
 
     def filter_deployment_by_label(self, exist_filter):
         for deployment in self.__deployment_list:
+            filtered = False
             for filter in exist_filter:
                 if filter not in deployment.labels:
-                    self.__deployment_incorrect_labels.append(deployment)
-                else:
-                    self.__deployment_correct_labels.append(deployment)
+                    filtered = True
+            if filtered:
+                self.__deployment_incorrect_labels.append(deployment)
+            else:
+                self.__deployment_correct_labels.append(deployment)
 
 
     def check_namespace(self, namespace):
