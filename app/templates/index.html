@@ -4,22 +4,54 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-  <p>This is a first template. {{var1}}</p>
+  <div class="topmenu">
+    <ul>
+      <li><img src="{{url_for('static', filename='images/cat-icon.png')}}" /></li>
+      <li><a href="#Button1">Button1</a></li>
+      <li><a href="#Button2">Button2</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </div>
+
+  <div class="mainpage">
+  <h1> Correct deployments </h1>
 
   <table>
   <tr>
-    <th>Namespace</th>
-    <th>Deployment Name</th>
+    <th class="column1">Namespace</th>
+    <th class="column2">Deployment Name</th>
+    <th class="column3">Labels</th>
+    <th class="column4">Status</th>
   </tr>
-  {% for namespace in namespacelist %}
-  {% for app in namespace %}
+  {% for app in correct_deployments %}
   <tr>
-    <td>{{app[0]}}</td>
-    <td>{{app[1]}}</td>
+    <td>{{app.namespace}}</td>
+    <td>{{app.name}}</td>
+    <td>{{app.labels}}</td>
+    <td>&#x2705; &#x274E;</td>
   </tr>
-  {% endfor %}
   {% endfor %}
   </table>
+
+  <h1> Incorrect deployments </h1>
+
+  <table>
+  <tr>
+    <th class="column1">Namespace</th>
+    <th class="column2">Deployment Name</th>
+    <th class="column3">Labels</th>
+    <th class="column4">Status</th>
+  </tr>
+  {% for app in incorrect_deployments %}
+  <tr>
+    <td>{{app.namespace}}</td>
+    <td>{{app.name}}</td>
+    <td>{{app.labels}}</td>
+    <td>&#x2705; &#x274E;</td>
+  </tr>
+  {% endfor %}
+  </table>
+</div>
 
 </body>
 </html>

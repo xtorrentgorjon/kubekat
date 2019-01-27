@@ -3,7 +3,6 @@ RUN pip3 install Flask
 RUN pip3 install kubernetes
 RUN pip3 install flask_wtf
 WORKDIR /usr/src/app
-RUN mkdir static templates
 
 COPY app/ ./
 ENV FLASK_APP app.py
