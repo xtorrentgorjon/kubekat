@@ -49,6 +49,8 @@ tr:nth-child(even) {
 /* Page CSS */
 
 div {
-  margin-top:30px;
+  margin-top:50px;
+  margin-left: auto;
+  margin-right: auto;
   width: 80%;
 }
