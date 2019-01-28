@@ -38,15 +38,29 @@ class label_checker():
         return self.__deployment_incorrect_labels
 
     def filter_deployment_by_label(self, exist_filter):
-        for deployment in self.__deployment_list:
-            filtered = False
-            for filter in exist_filter:
-                if filter not in deployment.labels:
-                    filtered = True
-            if filtered:
-                self.__deployment_incorrect_labels.append(deployment)
-            else:
+        self.__app.logger.debug('Current filter %s', exist_filter)
+        if exist_filter == ['']:
+            for deployment in self.__deployment_list:
                 self.__deployment_correct_labels.append(deployment)
+        else:
+            for deployment in self.__deployment_list:
+                filtered = False
+                for filter in exist_filter:
+                    if ":" in filter:
+                        filter = filter.split(":")
+                        if filter[0] not in deployment.labels:
+                            filtered = True
+                        elif str(filter[1]) == str(deployment.labels[str(filter[0])]):
+                            filtered = False
+                        else:
+                            filtered = True
+                    else:
+                        if filter not in deployment.labels:
+                            filtered = True
+                if filtered:
+                    self.__deployment_incorrect_labels.append(deployment)
+                else:
+                    self.__deployment_correct_labels.append(deployment)
 
 
     def check_namespace(self, namespace):
