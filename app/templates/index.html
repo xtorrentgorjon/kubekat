@@ -7,24 +7,28 @@
 <body>
 
 
-  <div class="topmenu">
+  <div>
     <ul>
       <li><img src="{{url_for('static', filename='images/cat-icon.png')}}" /></li>
       <!--<li><a href="#Button1">Button1</a></li>-->
-      <li><a>Filter:</a><form action = "{{url}}" method = post>
+      <li><div class="topmenu"><a>Filter:</a><form action = "{{url}}" method = post>
          <fieldset>
             {{ form.hidden_tag() }}
             <div>
                {{ form.name }}{{ form.submit }}
             </div>
          </fieldset>
-      </form></li>
+      </form><span class="tooltiptext">Accepted formats are comma separated label or label:value filters.</br>For instance: 'sla, maintainer: Sjaak'</span></div></li>
       <!-- <li><a href="#Button2">Button2</a></li> -->
       <li><a class="about" href="#about">About</a></li>
     </ul>
   </div>
   <div class="mainpage">
     <h1>Current filter: {{filter}}</h1>
+
+    <!--<div class="tooltip">Hover over me
+
+    </div>-->
 
     <!--
     <form action = "{{url}}" method = post>
@@ -37,7 +41,7 @@
     </form>
   -->
 
-  <h1> Correct deployments </h1>
+  <h1> Matched deployments </h1>
 
   <table>
   <tr>
@@ -56,7 +60,7 @@
   {% endfor %}
   </table>
 
-  <h1> Incorrect deployments </h1>
+  <h1> Unmatched deployments </h1>
 
   <table>
   <tr>
