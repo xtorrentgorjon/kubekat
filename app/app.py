@@ -52,7 +52,7 @@ def application():
     correct_deployments = lc.get_correct_deployments()
     incorrect_deployments = lc.get_incorrect_deployments()
 
-    return render_template('index.html', form = form, correct_deployments=correct_deployments, incorrect_deployments=incorrect_deployments, filter=filter)
+    return render_template('index.html', form = form, correct_deployments=correct_deployments, incorrect_deployments=incorrect_deployments, filter=filter, url=request.host_url)
 
 
 if __name__ == "__main__":

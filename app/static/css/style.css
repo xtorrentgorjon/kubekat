@@ -36,9 +36,10 @@ li a {
   padding: 14px 16px;
   text-decoration: none;
   font-size: 20;
+  float: left;
 }
 
-li a:hover:not(.active) {
+li .about:hover:not(.active) {
   background-color: #111;
 }
 
@@ -72,6 +73,20 @@ tr:nth-child(even) {
 .column4 {
  width: 5%;
 }
+
+/* Form CSS */
+
+li fieldset {
+  border: none;
+  padding-top: 4%;
+  margin-bottom: 0;
+}
+
+li form {
+  margin-bottom: 0;
+  float: left;
+}
+
 
 /* Page CSS */
 
