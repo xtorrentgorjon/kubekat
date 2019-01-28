@@ -48,9 +48,11 @@ class label_checker():
                 for filter in exist_filter:
                     if ":" in filter:
                         filter = filter.split(":")
-                        if filter[0] not in deployment.labels:
+                        filter_label_key = filter[0].rstrip().lstrip()
+                        filter_label_value = filter[1].rstrip().lstrip()
+                        if filter_label_key not in deployment.labels:
                             filtered = True
-                        elif str(filter[1]) == str(deployment.labels[str(filter[0])]):
+                        elif str(filter_label_value) == str(deployment.labels[filter_label_key]):
                             filtered = False
                         else:
                             filtered = True

@@ -28,8 +28,8 @@ class Filter_Form(Form):
 
 def string_to_list(input_string):
     filter_list = input_string.split(",")
-    filter_list = [x.rstrip() for x in filter_list]
-    filter_list = [x.lstrip() for x in filter_list]
+    filter_list = [x.rstrip().lstrip() for x in filter_list]
+    #filter_list = [x.lstrip() for x in filter_list]
     return filter_list
 
 # Main

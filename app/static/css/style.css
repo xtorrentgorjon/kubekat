@@ -4,7 +4,7 @@ ul {
   margin: 0;
   padding: 0;
   padding-left:10%;
-  overflow: hidden;
+  /*overflow: hidden;*/
   background-color: #333;
   position: fixed;
   top: 0;
@@ -42,6 +42,7 @@ li a {
 li .about:hover:not(.active) {
   background-color: #111;
 }
+
 
 /* Table menu CSS */
 table {
@@ -91,6 +92,10 @@ li form {
 /* Page CSS */
 
 .topmenu {
+  height:50px;
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
 }
 
 .mainpage {
@@ -98,4 +103,37 @@ li form {
   margin-left: auto;
   margin-right: auto;
   width: 80%;
+}
+
+/*.topmenu {
+}*/
+
+.topmenu .tooltiptext {
+  visibility: hidden;
+  width: 100%;
+  background-color: #258959;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 7px 15px;
+  position: absolute;
+  z-index: 1;
+  top: 120%;
+  left: 35%;
+  margin-left: -60px;
+}
+
+.topmenu .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 40%;
+  margin-left: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #258959 transparent;
+}
+
+.topmenu:hover .tooltiptext {
+  visibility: visible;
 }
