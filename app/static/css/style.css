@@ -43,6 +43,24 @@ li .about:hover:not(.active) {
   background-color: #111;
 }
 
+/* Top menu > Form CSS */
+
+li div {
+  float: left;
+}
+
+li div form {
+  float: left;
+  margin-top: 10;
+}
+
+li fieldset {
+  border: none;
+  padding-top: 4%;
+  margin-bottom: 0;
+}
+
+
 
 /* Table menu CSS */
 table {
@@ -73,19 +91,6 @@ tr:nth-child(even) {
 
 .column4 {
  width: 5%;
-}
-
-/* Form CSS */
-
-li fieldset {
-  border: none;
-  padding-top: 4%;
-  margin-bottom: 0;
-}
-
-li form {
-  margin-bottom: 0;
-  float: left;
 }
 
 
@@ -121,6 +126,9 @@ li form {
   top: 120%;
   left: 35%;
   margin-left: -60px;
+
+  transition: opacity 1s;
+  opacity: 0;
 }
 
 .topmenu .tooltiptext::after {
@@ -136,4 +144,6 @@ li form {
 
 .topmenu:hover .tooltiptext {
   visibility: visible;
+  transition: opacity 1s;
+  opacity: 1;
 }
