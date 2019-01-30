@@ -54,6 +54,11 @@ def application():
 
     return render_template('index.html', form = form, correct_deployments=correct_deployments, incorrect_deployments=incorrect_deployments, filter=filter, url=request.host_url)
 
+@app.route("/about.html", methods = ['GET'])
+def aboutpage():
+    return render_template('about.html')
+
+
 
 if __name__ == "__main__":
     if(args.debug):

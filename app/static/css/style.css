@@ -56,8 +56,8 @@ li div form {
 
 li fieldset {
   border: none;
-  padding-top: 4%;
-  margin-bottom: 0;
+  -ms-transform: translateY(-10%);
+  transform: translateY(-10%);
 }
 
 
