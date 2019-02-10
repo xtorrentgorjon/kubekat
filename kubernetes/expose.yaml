@@ -21,7 +21,7 @@ metadata:
   name: kubernetes-label-checker
 spec:
   rules:
-  - host: label-checker.gerimedica.io
+  - host: label-checker.cluster.io
     http:
       paths:
       - backend:
