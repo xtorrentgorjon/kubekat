@@ -44,6 +44,7 @@ class label_checker():
                 self.__deployment_correct_labels.append(deployment)
         else:
             for deployment in self.__deployment_list:
+                self.__app.logger.debug('Checking deployment %s', deployment)
                 filtered = False
                 for filter in exist_filter:
                     if ":" in filter:
@@ -57,7 +58,9 @@ class label_checker():
                         else:
                             filtered = True
                     else:
-                        if filter not in deployment.labels:
+                        if deployment.labels == None:
+                            filtered = True
+                        elif filter not in deployment.labels:
                             filtered = True
                 if filtered:
                     self.__deployment_incorrect_labels.append(deployment)

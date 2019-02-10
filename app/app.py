@@ -47,8 +47,8 @@ def application():
 
     lc = label_checker(app)
     deployments = lc.check_all_namespaces()
-    lc.filter_deployment_by_label(filter)
     app.logger.info('Detected apps: %s', deployments)
+    lc.filter_deployment_by_label(filter)
     correct_deployments = lc.get_correct_deployments()
     incorrect_deployments = lc.get_incorrect_deployments()
 
