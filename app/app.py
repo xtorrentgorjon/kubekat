@@ -4,7 +4,6 @@ from wtforms import TextField
 
 from functions.functions import *
 import argparse
-
 import os
 
 app = Flask(__name__)
@@ -53,8 +52,8 @@ def application():
     resources = lc.check_all_namespaces()
     app.logger.info('Detected apps: %s', resources)
     lc.filter_resource_by_label(filter)
-    correct_resources = lc.get_correct_resources()
-    incorrect_resources = lc.get_incorrect_resources()
+    correct_resources, incorrect_resources = lc.get_correct_resources(), lc.get_incorrect_resources()
+
 
     request_url = "http://"+request.host
     if (INGRESS_TLS):
