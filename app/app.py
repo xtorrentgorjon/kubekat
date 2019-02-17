@@ -7,6 +7,8 @@ import argparse
 
 app = Flask(__name__)
 
+INGRESS_TLS = True
+
 app.config.update(dict(
     SECRET_KEY="SECRETKEY_LMAO_ROFL",
     WTF_CSRF_SECRET_KEY="SECRETKEY_LMAO_ROFL"
@@ -51,7 +53,9 @@ def application():
     correct_deployments = lc.get_correct_deployments()
     incorrect_deployments = lc.get_incorrect_deployments()
 
-    request_url = "https://"+request.host
+    request_url = "http://"+request.host
+    if (INGRESS_TLS):
+        request_url = "https://"+request.host
 
     return render_template('index.html',
         form = form, correct_deployments=correct_deployments,
