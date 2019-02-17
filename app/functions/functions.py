@@ -58,18 +58,18 @@ class label_checker():
                 for filter in exist_filter:
                     if ":" in filter:
                         filter = filter.split(":")
-                        filter_label_key = filter[0].rstrip().lstrip()
-                        filter_label_value = filter[1].rstrip().lstrip()
-                        if filter_label_key not in resource.labels:
+                        filter_label_key = filter[0].strip()
+                        filter_label_value = filter[1].strip()
+                        if filter_label_key not in resource["metadata"].labels:
                             filtered = True
-                        elif str(filter_label_value) == str(resource.labels[filter_label_key]):
+                        elif str(filter_label_value) == str(resource["metadata"].labels[filter_label_key]):
                             filtered = False
                         else:
                             filtered = True
                     else:
-                        if resource.labels == None:
+                        if resource["metadata"].labels == None:
                             filtered = True
-                        elif filter not in resource.labels:
+                        elif filter not in resource["metadata"].labels:
                             filtered = True
                 if filtered:
                     self.__resource_incorrect_labels.append(resource)
@@ -80,7 +80,15 @@ class label_checker():
     def check_namespace(self, namespace):
         output_deployments = self.__kq.list_deployments_in_namespace(namespace)
         output_statefulsets = self.__kq.list_statefulsets_in_namespace(namespace)
-        output = output_deployments + output_statefulsets
+
+        output = []
+
+        for deployment in output_deployments:
+            output.append({"metadata":deployment, "type": "deployment"})
+
+        for statefulset in output_statefulsets:
+            output.append({"metadata":statefulset, "type": "statefulset"})
+
         return output
 
 

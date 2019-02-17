@@ -35,10 +35,10 @@
   </tr>
   {% for app in correct_resources %}
   <tr>
-    <td>{{app.namespace}}</td>
-    <td>{{app.name}}</td>
-    <td>{{app.labels}}</td>
-    <td>&#x2705; &#x274E;</td>
+    <td>{{app.metadata.namespace}}</td>
+    <td>{{app.metadata.name}}</td>
+    <td>{{app.metadata.labels}}</td>
+    <td>{{app.type}}</td>
   </tr>
   {% endfor %}
   </table>
@@ -54,10 +54,10 @@
   </tr>
   {% for app in incorrect_resources %}
   <tr>
-    <td>{{app.namespace}}</td>
-    <td>{{app.name}}</td>
-    <td>{{app.labels}}</td>
-    <td>&#x2705; &#x274E;</td>
+    <td>{{app.metadata.namespace}}</td>
+    <td>{{app.metadata.name}}</td>
+    <td>{{app.metadata.labels}}</td>
+    <td>{{app.type}}</td>
   </tr>
   {% endfor %}
   </table>
