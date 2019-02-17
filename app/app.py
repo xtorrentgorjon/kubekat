@@ -50,19 +50,19 @@ def application():
     app.logger.debug('Current filter type %s', type(filter))
 
     lc = label_checker(app)
-    deployments = lc.check_all_namespaces()
-    app.logger.info('Detected apps: %s', deployments)
-    lc.filter_deployment_by_label(filter)
-    correct_deployments = lc.get_correct_deployments()
-    incorrect_deployments = lc.get_incorrect_deployments()
+    resources = lc.check_all_namespaces()
+    app.logger.info('Detected apps: %s', resources)
+    lc.filter_resource_by_label(filter)
+    correct_resources = lc.get_correct_resources()
+    incorrect_resources = lc.get_incorrect_resources()
 
     request_url = "http://"+request.host
     if (INGRESS_TLS):
         request_url = "https://"+request.host
 
     return render_template('index.html',
-        form = form, correct_deployments=correct_deployments,
-        incorrect_deployments=incorrect_deployments, filter=filter,
+        form = form, correct_resources=correct_resources,
+        incorrect_resources=incorrect_resources, filter=filter,
         url=request_url)
 
 @app.route("/about.html", methods = ['GET'])
