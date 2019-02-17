@@ -5,9 +5,12 @@ from wtforms import TextField
 from functions.functions import *
 import argparse
 
+import os
+
 app = Flask(__name__)
 
-INGRESS_TLS = True
+INGRESS_TLS = os.environ['INGRESS_TLS']
+DEFAULT_FILTER = os.environ['DEFAULT_FILTER']
 
 app.config.update(dict(
     SECRET_KEY="SECRETKEY_LMAO_ROFL",
@@ -36,7 +39,7 @@ def string_to_list(input_string):
 # Main
 @app.route("/", methods = ['GET', 'POST'])
 def application():
-    filter = ["sla"]
+    filter = [DEFAULT_FILTER]
     form = Filter_Form()
 
     if form.validate_on_submit():
