@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template
 from flask_wtf import Form
 from wtforms import TextField
+import random
+import string
 
 from functions.functions import *
 import argparse
@@ -12,8 +14,8 @@ INGRESS_TLS = os.environ['INGRESS_TLS']
 DEFAULT_FILTER = os.environ['DEFAULT_FILTER']
 
 app.config.update(dict(
-    SECRET_KEY="SECRETKEY_LMAO_ROFL",
-    WTF_CSRF_SECRET_KEY="SECRETKEY_LMAO_ROFL"
+    SECRET_KEY=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)),
+    WTF_CSRF_SECRET_KEY=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
 ))
 
 parser = argparse.ArgumentParser()
