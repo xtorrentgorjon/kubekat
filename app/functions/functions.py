@@ -60,12 +60,15 @@ class label_checker():
                         filter = filter.split(":")
                         filter_label_key = filter[0].strip()
                         filter_label_value = filter[1].strip()
-                        if filter_label_key not in resource["metadata"].labels:
+                        if resource["metadata"].labels == None:
                             filtered = True
-                        elif str(filter_label_value) == str(resource["metadata"].labels[filter_label_key]):
-                            filtered = False
                         else:
-                            filtered = True
+                            if filter_label_key not in resource["metadata"].labels:
+                                filtered = True
+                            elif str(filter_label_value) == str(resource["metadata"].labels[filter_label_key]):
+                                filtered = False
+                            else:
+                                filtered = True
                     else:
                         if resource["metadata"].labels == None:
                             filtered = True
