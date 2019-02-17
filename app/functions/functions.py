@@ -9,7 +9,6 @@ class kubernetes_query():
         output = api.list_namespaced_deployment(namespace)
         deployment_list = []
         for deployment in output.items:
-            #out_deployment = deployment.metadata
             deployment_list.append(deployment.metadata)
         return deployment_list
 
@@ -18,7 +17,6 @@ class kubernetes_query():
         output = api.list_namespaced_stateful_set(namespace)
         statefulset_list = []
         for statefulset in output.items:
-            #out_statefulset = statefulset.metadata
             statefulset_list.append(statefulset.metadata)
         return statefulset_list
 
@@ -35,7 +33,7 @@ class kubernetes_query():
 class label_checker():
     def __init__(self, app):
         self.__app = app
-        self.__kq = kubernetes_query()
+        self.__kubernetes_query = kubernetes_query()
         self.__resource_list = []
         self.__resource_correct_labels = []
         self.__resource_incorrect_labels = []
@@ -81,8 +79,8 @@ class label_checker():
 
 
     def check_namespace(self, namespace):
-        output_deployments = self.__kq.list_deployments_in_namespace(namespace)
-        output_statefulsets = self.__kq.list_statefulsets_in_namespace(namespace)
+        output_deployments = self.__kubernetes_query.list_deployments_in_namespace(namespace)
+        output_statefulsets = self.__kubernetes_query.list_statefulsets_in_namespace(namespace)
 
         output = []
 
@@ -96,7 +94,7 @@ class label_checker():
 
 
     def check_all_namespaces(self):
-        output = self.__kq.list_namespaces()
+        output = self.__kubernetes_query.list_namespaces()
 
         for namespace in output:
             self.__app.logger.debug('Checking namespace %s', namespace)
