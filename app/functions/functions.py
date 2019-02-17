@@ -9,9 +9,18 @@ class kubernetes_query():
         output = api.list_namespaced_deployment(namespace)
         deployment_list = []
         for deployment in output.items:
-            out_deployment = deployment.metadata
-            deployment_list.append(out_deployment)
+            #out_deployment = deployment.metadata
+            deployment_list.append(deployment.metadata)
         return deployment_list
+
+    def list_statefulsets_in_namespace(self, namespace):
+        api = client.AppsV1Api()
+        output = api.list_namespaced_stateful_set(namespace)
+        statefulset_list = []
+        for statefulset in output.items:
+            #out_statefulset = statefulset.metadata
+            statefulset_list.append(statefulset.metadata)
+        return statefulset_list
 
 
     def list_namespaces(self):
@@ -27,49 +36,59 @@ class label_checker():
     def __init__(self, app):
         self.__app = app
         self.__kq = kubernetes_query()
-        self.__deployment_list = []
-        self.__deployment_correct_labels = []
-        self.__deployment_incorrect_labels = []
+        self.__resource_list = []
+        self.__resource_correct_labels = []
+        self.__resource_incorrect_labels = []
 
-    def get_correct_deployments(self):
-        return self.__deployment_correct_labels
+    def get_correct_resources(self):
+        return self.__resource_correct_labels
 
-    def get_incorrect_deployments(self):
-        return self.__deployment_incorrect_labels
+    def get_incorrect_resources(self):
+        return self.__resource_incorrect_labels
 
-    def filter_deployment_by_label(self, exist_filter):
+    def filter_resource_by_label(self, exist_filter):
         self.__app.logger.debug('Current filter %s', exist_filter)
         if exist_filter == ['']:
-            for deployment in self.__deployment_list:
-                self.__deployment_correct_labels.append(deployment)
+            for resource in self.__resource_list:
+                self.__resource_correct_labels.append(resource)
         else:
-            for deployment in self.__deployment_list:
-                self.__app.logger.debug('Checking deployment %s', deployment)
+            for resource in self.__resource_list:
+                self.__app.logger.debug('Checking resource %s', resource)
                 filtered = False
                 for filter in exist_filter:
                     if ":" in filter:
                         filter = filter.split(":")
-                        filter_label_key = filter[0].rstrip().lstrip()
-                        filter_label_value = filter[1].rstrip().lstrip()
-                        if filter_label_key not in deployment.labels:
+                        filter_label_key = filter[0].strip()
+                        filter_label_value = filter[1].strip()
+                        if filter_label_key not in resource["metadata"].labels:
                             filtered = True
-                        elif str(filter_label_value) == str(deployment.labels[filter_label_key]):
+                        elif str(filter_label_value) == str(resource["metadata"].labels[filter_label_key]):
                             filtered = False
                         else:
                             filtered = True
                     else:
-                        if deployment.labels == None:
+                        if resource["metadata"].labels == None:
                             filtered = True
-                        elif filter not in deployment.labels:
+                        elif filter not in resource["metadata"].labels:
                             filtered = True
                 if filtered:
-                    self.__deployment_incorrect_labels.append(deployment)
+                    self.__resource_incorrect_labels.append(resource)
                 else:
-                    self.__deployment_correct_labels.append(deployment)
+                    self.__resource_correct_labels.append(resource)
 
 
     def check_namespace(self, namespace):
-        output = self.__kq.list_deployments_in_namespace(namespace)
+        output_deployments = self.__kq.list_deployments_in_namespace(namespace)
+        output_statefulsets = self.__kq.list_statefulsets_in_namespace(namespace)
+
+        output = []
+
+        for deployment in output_deployments:
+            output.append({"metadata":deployment, "type": "deployment"})
+
+        for statefulset in output_statefulsets:
+            output.append({"metadata":statefulset, "type": "statefulset"})
+
         return output
 
 
@@ -78,7 +97,7 @@ class label_checker():
 
         for namespace in output:
             self.__app.logger.debug('Checking namespace %s', namespace)
-            deployments_in_namespace = self.check_namespace(namespace)
-            self.__deployment_list += deployments_in_namespace
+            resources_in_namespace = self.check_namespace(namespace)
+            self.__resource_list += resources_in_namespace
 
-        return self.__deployment_list
+        return self.__resource_list

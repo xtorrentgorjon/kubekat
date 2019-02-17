@@ -24,40 +24,40 @@
   <div class="mainpage">
     <h1>Current filter: {{filter}}</h1>
 
-  <h1> Matched deployments </h1>
+  <h1> Matched Resources </h1>
 
   <table>
   <tr>
     <th class="column1">Namespace</th>
-    <th class="column2">Deployment Name</th>
+    <th class="column2">Resource Name</th>
     <th class="column3">Labels</th>
-    <th class="column4">Status</th>
+    <th class="column4">Type</th>
   </tr>
-  {% for app in correct_deployments %}
+  {% for app in correct_resources %}
   <tr>
-    <td>{{app.namespace}}</td>
-    <td>{{app.name}}</td>
-    <td>{{app.labels}}</td>
-    <td>&#x2705; &#x274E;</td>
+    <td>{{app.metadata.namespace}}</td>
+    <td>{{app.metadata.name}}</td>
+    <td>{{app.metadata.labels}}</td>
+    <td>{{app.type}}</td>
   </tr>
   {% endfor %}
   </table>
 
-  <h1> Unmatched deployments </h1>
+  <h1> Unmatched Resources </h1>
 
   <table>
   <tr>
     <th class="column1">Namespace</th>
-    <th class="column2">Deployment Name</th>
+    <th class="column2">Resource Name</th>
     <th class="column3">Labels</th>
-    <th class="column4">Status</th>
+    <th class="column4">Type</th>
   </tr>
-  {% for app in incorrect_deployments %}
+  {% for app in incorrect_resources %}
   <tr>
-    <td>{{app.namespace}}</td>
-    <td>{{app.name}}</td>
-    <td>{{app.labels}}</td>
-    <td>&#x2705; &#x274E;</td>
+    <td>{{app.metadata.namespace}}</td>
+    <td>{{app.metadata.name}}</td>
+    <td>{{app.metadata.labels}}</td>
+    <td>{{app.type}}</td>
   </tr>
   {% endfor %}
   </table>
