@@ -28,8 +28,7 @@ class Filter_Form(Form):
 
 def string_to_list(input_string):
     filter_list = input_string.split(",")
-    filter_list = [x.rstrip().lstrip() for x in filter_list]
-    #filter_list = [x.lstrip() for x in filter_list]
+    filter_list = [x.strip() for x in filter_list]
     return filter_list
 
 # Main
@@ -52,7 +51,12 @@ def application():
     correct_deployments = lc.get_correct_deployments()
     incorrect_deployments = lc.get_incorrect_deployments()
 
-    return render_template('index.html', form = form, correct_deployments=correct_deployments, incorrect_deployments=incorrect_deployments, filter=filter, url=request.host_url)
+    request_url = "https://"+request.host
+
+    return render_template('index.html',
+        form = form, correct_deployments=correct_deployments,
+        incorrect_deployments=incorrect_deployments, filter=filter,
+        url=request_url)
 
 @app.route("/about.html", methods = ['GET'])
 def aboutpage():
