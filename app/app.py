@@ -5,7 +5,12 @@ from wtforms import TextField
 from functions.functions import *
 import argparse
 
+import os
+
 app = Flask(__name__)
+
+INGRESS_TLS = os.environ['INGRESS_TLS']
+DEFAULT_FILTER = os.environ['DEFAULT_FILTER']
 
 app.config.update(dict(
     SECRET_KEY="SECRETKEY_LMAO_ROFL",
@@ -28,14 +33,13 @@ class Filter_Form(Form):
 
 def string_to_list(input_string):
     filter_list = input_string.split(",")
-    filter_list = [x.rstrip().lstrip() for x in filter_list]
-    #filter_list = [x.lstrip() for x in filter_list]
+    filter_list = [x.strip() for x in filter_list]
     return filter_list
 
 # Main
 @app.route("/", methods = ['GET', 'POST'])
 def application():
-    filter = ["sla"]
+    filter = [DEFAULT_FILTER]
     form = Filter_Form()
 
     if form.validate_on_submit():
@@ -52,7 +56,14 @@ def application():
     correct_deployments = lc.get_correct_deployments()
     incorrect_deployments = lc.get_incorrect_deployments()
 
-    return render_template('index.html', form = form, correct_deployments=correct_deployments, incorrect_deployments=incorrect_deployments, filter=filter, url=request.host_url)
+    request_url = "http://"+request.host
+    if (INGRESS_TLS):
+        request_url = "https://"+request.host
+
+    return render_template('index.html',
+        form = form, correct_deployments=correct_deployments,
+        incorrect_deployments=incorrect_deployments, filter=filter,
+        url=request_url)
 
 @app.route("/about.html", methods = ['GET'])
 def aboutpage():
