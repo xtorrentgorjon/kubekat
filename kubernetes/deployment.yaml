@@ -21,6 +21,6 @@ spec:
       serviceAccountName: kubernetes-label-checker
       containers:
       - name: kubernetes-label-checker
-        image: sendotux/kubernetes-label-checker:latest
+        image: sendotux/kubernetes-label-checker:v1.0
         ports:
         - containerPort: 5000
