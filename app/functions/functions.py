@@ -7,27 +7,17 @@ class kubernetes_query():
     def list_deployments_in_namespace(self, namespace):
         api = client.AppsV1Api()
         output = api.list_namespaced_deployment(namespace)
-        deployment_list = []
-        for deployment in output.items:
-            deployment_list.append(deployment.metadata)
-        return deployment_list
+        return [deployment.metadata for deployment in output.items]
 
     def list_statefulsets_in_namespace(self, namespace):
         api = client.AppsV1Api()
         output = api.list_namespaced_stateful_set(namespace)
-        statefulset_list = []
-        for statefulset in output.items:
-            statefulset_list.append(statefulset.metadata)
-        return statefulset_list
-
+        return [statefulset.metadata for statefulset in output.items]
 
     def list_namespaces(self):
         api = client.CoreV1Api()
         output = api.list_namespace()
-        namespace_list = []
-        for namespace in output.items:
-            namespace_list.append(str(namespace.metadata.name))
-        return namespace_list
+        return [namespace.metadata.name for namespace in output.items]
 
 
 class label_checker():
