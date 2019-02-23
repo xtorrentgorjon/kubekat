@@ -72,6 +72,7 @@
     </div>
   </div>
 
+  {% if correct_resources|length > 0 %}
   <div class="container"> <!-- Matches should go here -->
     <div class="row">
       <div class="col-lg-12 text-center">
@@ -88,7 +89,7 @@
             <tbody>
             {% for app in correct_resources %}
               <tr>
-                <th class="d-none d-lg-block">{{app.metadata.namespace}}</td>
+                <td class="d-none d-lg-block">{{app.metadata.namespace}}</td>
                 <td>{{app.metadata.name}}</td>
                 <td><div class="column-text-left">
                   {% if app.metadata.labels is mapping %}
@@ -98,7 +99,7 @@
                   {% else %}
                   [No Labels]
                   {% endif %}</div></td>
-                <th class="d-none d-lg-block">{{app.type}}</td>
+                <td class="d-none d-lg-block">{{app.type}}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -106,7 +107,9 @@
       </div>
     </div>
   </div>
+  {% endif %}
 
+  {% if incorrect_resources|length > 0 %}
   <div class="container"> <!-- Matches should go here -->
     <div class="row">
       <div class="col-lg-12 text-center">
@@ -123,7 +126,7 @@
             <tbody>
             {% for app in incorrect_resources %}
               <tr>
-                <th class="d-none d-lg-block">{{app.metadata.namespace}}</td>
+                <td class="d-none d-lg-block">{{app.metadata.namespace}}</td>
                 <td>{{app.metadata.name}}</td>
                 <td><div class="column-text-left">
                   {% if app.metadata.labels is mapping %}
@@ -133,7 +136,7 @@
                   {% else %}
                   [No Labels]
                   {% endif %}</div></td>
-                <th class="d-none d-lg-block">{{app.type}}</td>
+                <td class="d-none d-lg-block">{{app.type}}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -141,6 +144,7 @@
       </div>
     </div>
   </div>
+  {% endif %}
 
   <!-- Bootstrap core JavaScript -->
   <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
