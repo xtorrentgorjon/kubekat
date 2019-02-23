@@ -44,7 +44,7 @@
         {% if correct_resources|length == 0 %}
         <div class="alert alert-warning alert-dismissible">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>Oops!</strong> Looks like your query had no matches.
+          <strong>Oops!</strong> Your query had no matches.
         </div>
         {% endif %}
       </div>
@@ -53,8 +53,6 @@
 
   <div class="container"> <!-- Filter should go here -->
     <div class="row">
-      <div class="col-lg-12 text-center">
-        <div class="row">
 
           <form action="{{url}}/bootstrap" method="post" role="form">
             {{ form.csrf }}{{ form.hidden_tag() }}
@@ -68,9 +66,6 @@
             </div>
 
           </form>
-
-        </div>
-      </div>
     </div>
   </div>
 
