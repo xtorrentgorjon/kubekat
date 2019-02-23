@@ -38,6 +38,9 @@ def string_to_list(input_string):
     filter_list = [x.strip() for x in filter_list]
     return filter_list
 
+def list_without_special_characters(input_list):
+    return str(input_list).lstrip('[').rstrip(']').replace('"', '').replace("'","")
+
 # Main
 @app.route("/", methods = ['GET', 'POST'])
 def application_bootstrap():
@@ -59,11 +62,12 @@ def application_bootstrap():
     if (INGRESS_TLS):
         request_url = "https://"+request.host
 
+    str_filter=list_without_special_characters(filter)
 
     return render_template('bootstrap.html',
         form = form, correct_resources=correct_resources,
         incorrect_resources=incorrect_resources,
-        filter=filter, url=request_url, version=VERSION)
+        str_filter=str_filter, url=request_url, version=VERSION)
 
 
 @app.route("/about.html", methods = ['GET'])
