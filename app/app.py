@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 INGRESS_TLS = os.environ['INGRESS_TLS']
 DEFAULT_FILTER = os.environ['DEFAULT_FILTER']
-VERSION = "1.2.1-CSSfix"
+VERSION = "1.2.6-CSSfix"
 
 app.config.update(dict(
     SECRET_KEY=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)),

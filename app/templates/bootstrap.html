@@ -30,7 +30,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="about.html">About</a>
           </li>
         </ul>
       </div>
@@ -54,7 +54,7 @@
   <div class="container"> <!-- Filter should go here -->
     <div class="row">
 
-          <form action="{{url}}/bootstrap" method="post" role="form">
+          <form action="{{url}}" method="post" role="form">
             {{ form.csrf }}{{ form.hidden_tag() }}
 
             <div class="col-9 col-sm-10 col-md-11" id="form_text_input">
@@ -70,23 +70,23 @@
   </div>
 
   {% if correct_resources|length > 0 %}
-  <div class="container"> <!-- Matches should go here -->
+  <div class="container"> <!-- Matches should go here  -->
     <div class="row">
-      <div class="col-lg-12 text-center">
+      <div class="col text-center d-none d-md-block">
         <h2>Matched Resources</h2>
         <table class="table table-striped">
             <thead>
               <tr>
-                <div class="d-none d-lg-block"><th>Namespace</th></div>
+                <th>Namespace</th>
                 <th>Resource Name</th>
                 <th>Labels</th>
-                <div class="d-none d-lg-block"><th>Type</th></div>
+                <th>Type</th>
               </tr>
             </thead>
             <tbody>
             {% for app in correct_resources %}
               <tr>
-                <div class="d-none d-lg-block"><td>{{app.metadata.namespace}}</td></div>
+                <th>{{app.metadata.namespace}}</td>
                 <td>{{app.metadata.name}}</td>
                 <td><div class="column-text-left">
                   {% if app.metadata.labels is mapping %}
@@ -96,11 +96,38 @@
                   {% else %}
                   [No Labels]
                   {% endif %}</div></td>
-                <div class="d-none d-lg-block"><td>{{app.type}}</td></div>
+                <td>{{app.type}}</td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
+        </div>
+        <div class="col text-center d-block d-md-none">
+          <h2>Matched Resources</h2>
+          <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Resource Name</th>
+                  <th>Labels</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for app in correct_resources %}
+                <tr>
+                  <td>{{app.metadata.name}}</td>
+                  <td><div class="column-text-left">
+                    {% if app.metadata.labels is mapping %}
+                    {% for labelkey, labelvalue in app.metadata.labels.items() %}
+                    {{labelkey}}:{{labelvalue}}</br>
+                    {% endfor %}
+                    {% else %}
+                    [No Labels]
+                    {% endif %}</div></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
       </div>
     </div>
   </div>
@@ -109,21 +136,21 @@
   {% if incorrect_resources|length > 0 %}
   <div class="container"> <!-- Matches should go here -->
     <div class="row">
-      <div class="col-lg-12 text-center">
+      <div class="col text-center d-none d-md-block">
         <h2>Unmatched Resources</h2>
         <table class="table table-striped">
             <thead>
               <tr>
-                <div class="d-none d-lg-block"><th>Namespace</th></div>
+                <th>Namespace</th>
                 <th>Resource Name</th>
                 <th>Labels</th>
-                <div class="d-none d-lg-block"><th>Type</th></div>
+                <th>Type</th>
               </tr>
             </thead>
             <tbody>
             {% for app in incorrect_resources %}
               <tr>
-                <div class="d-none d-lg-block"><td>{{app.metadata.namespace}}</td></div>
+                <td>{{app.metadata.namespace}}</td>
                 <td>{{app.metadata.name}}</td>
                 <td><div class="column-text-left">
                   {% if app.metadata.labels is mapping %}
@@ -133,7 +160,34 @@
                   {% else %}
                   None
                   {% endif %}</div></td>
-                <div class="d-none d-lg-block"><td>{{app.type}}</td></div>
+                <td>{{app.type}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+      </div>
+
+      <div class="col text-center d-block d-md-none">
+        <h2>Unmatched Resources</h2>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Resource Name</th>
+                <th>Labels</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for app in incorrect_resources %}
+              <tr>
+                <td>{{app.metadata.name}}</td>
+                <td><div class="column-text-left">
+                  {% if app.metadata.labels is mapping %}
+                  {% for labelkey, labelvalue in app.metadata.labels.items() %}
+                  {{labelkey}}:{{labelvalue}}</br>
+                  {% endfor %}
+                  {% else %}
+                  None
+                  {% endif %}</div></td>
               </tr>
               {% endfor %}
             </tbody>
