@@ -77,16 +77,16 @@
         <table class="table table-striped">
             <thead>
               <tr>
-                <th class="d-none d-lg-block">Namespace</th>
+                <div class="d-none d-lg-block"><th>Namespace</th></div>
                 <th>Resource Name</th>
                 <th>Labels</th>
-                <th class="d-none d-lg-block">Type</th>
+                <div class="d-none d-lg-block"><th>Type</th></div>
               </tr>
             </thead>
             <tbody>
             {% for app in correct_resources %}
               <tr>
-                <td class="d-none d-lg-block">{{app.metadata.namespace}}</td>
+                <div class="d-none d-lg-block"><td>{{app.metadata.namespace}}</td></div>
                 <td>{{app.metadata.name}}</td>
                 <td><div class="column-text-left">
                   {% if app.metadata.labels is mapping %}
@@ -96,7 +96,7 @@
                   {% else %}
                   [No Labels]
                   {% endif %}</div></td>
-                <td class="d-none d-lg-block">{{app.type}}</td>
+                <div class="d-none d-lg-block"><td>{{app.type}}</td></div>
               </tr>
               {% endfor %}
             </tbody>
@@ -114,16 +114,16 @@
         <table class="table table-striped">
             <thead>
               <tr>
-                <th class="d-none d-lg-block">Namespace</th>
+                <div class="d-none d-lg-block"><th>Namespace</th></div>
                 <th>Resource Name</th>
                 <th>Labels</th>
-                <th class="d-none d-lg-block">Type</th>
+                <div class="d-none d-lg-block"><th>Type</th></div>
               </tr>
             </thead>
             <tbody>
             {% for app in incorrect_resources %}
               <tr>
-                <td class="d-none d-lg-block">{{app.metadata.namespace}}</td>
+                <div class="d-none d-lg-block"><td>{{app.metadata.namespace}}</td></div>
                 <td>{{app.metadata.name}}</td>
                 <td><div class="column-text-left">
                   {% if app.metadata.labels is mapping %}
@@ -133,7 +133,7 @@
                   {% else %}
                   None
                   {% endif %}</div></td>
-                <td class="d-none d-lg-block">{{app.type}}</td>
+                <div class="d-none d-lg-block"><td>{{app.type}}</td></div>
               </tr>
               {% endfor %}
             </tbody>
