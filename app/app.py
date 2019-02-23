@@ -69,6 +69,12 @@ def application():
 @app.route("/bootstrap", methods = ['GET', 'POST'])
 def application_bootstrap():
     filter = [DEFAULT_FILTER]
+    form = Filter_Form()
+
+    if form.validate_on_submit():
+        filter = form.name.data
+        filter = string_to_list(filter)
+
 
     lc = label_checker(app)
     resources = lc.check_all_namespaces()
@@ -80,8 +86,9 @@ def application_bootstrap():
     if (INGRESS_TLS):
         request_url = "https://"+request.host
 
+
     return render_template('bootstrap.html',
-        correct_resources=correct_resources,
+        form = form, correct_resources=correct_resources,
         incorrect_resources=incorrect_resources,
         filter=filter, url=request_url)
 
