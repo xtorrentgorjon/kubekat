@@ -66,6 +66,26 @@ def application():
         incorrect_resources=incorrect_resources, filter=filter,
         url=request_url)
 
+@app.route("/bootstrap", methods = ['GET', 'POST'])
+def application_bootstrap():
+    filter = [DEFAULT_FILTER]
+
+    lc = label_checker(app)
+    resources = lc.check_all_namespaces()
+    app.logger.info('Detected apps: %s', resources)
+    lc.filter_resource_by_label(filter)
+    correct_resources, incorrect_resources = lc.get_correct_resources(), lc.get_incorrect_resources()
+
+    request_url = "http://"+request.host
+    if (INGRESS_TLS):
+        request_url = "https://"+request.host
+
+    return render_template('bootstrap.html',
+        correct_resources=correct_resources,
+        incorrect_resources=incorrect_resources,
+        filter=filter, url=request_url)
+
+
 @app.route("/about.html", methods = ['GET'])
 def aboutpage():
     return render_template('about.html')
