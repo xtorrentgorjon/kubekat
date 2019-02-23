@@ -4,4 +4,4 @@ data:
   DEFAULT_FILTER: 'sla'
 kind: ConfigMap
 metadata:
-  name: kubernetes-label-checker-configmap
+  name: kubekat-configmap

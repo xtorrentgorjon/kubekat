@@ -12,6 +12,7 @@ app = Flask(__name__)
 
 INGRESS_TLS = os.environ['INGRESS_TLS']
 DEFAULT_FILTER = os.environ['DEFAULT_FILTER']
+VERSION = "1.1-Bootstrap"
 
 app.config.update(dict(
     SECRET_KEY=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)),
@@ -39,34 +40,6 @@ def string_to_list(input_string):
 
 # Main
 @app.route("/", methods = ['GET', 'POST'])
-def application():
-    filter = [DEFAULT_FILTER]
-    form = Filter_Form()
-
-    if form.validate_on_submit():
-        filter = form.name.data
-        filter = string_to_list(filter)
-
-    app.logger.debug('Current filter %s', filter)
-    app.logger.debug('Current filter type %s', type(filter))
-
-    lc = label_checker(app)
-    resources = lc.check_all_namespaces()
-    app.logger.info('Detected apps: %s', resources)
-    lc.filter_resource_by_label(filter)
-    correct_resources, incorrect_resources = lc.get_correct_resources(), lc.get_incorrect_resources()
-
-
-    request_url = "http://"+request.host
-    if (INGRESS_TLS):
-        request_url = "https://"+request.host
-
-    return render_template('index.html',
-        form = form, correct_resources=correct_resources,
-        incorrect_resources=incorrect_resources, filter=filter,
-        url=request_url)
-
-@app.route("/bootstrap", methods = ['GET', 'POST'])
 def application_bootstrap():
     filter = [DEFAULT_FILTER]
     form = Filter_Form()
@@ -90,7 +63,7 @@ def application_bootstrap():
     return render_template('bootstrap.html',
         form = form, correct_resources=correct_resources,
         incorrect_resources=incorrect_resources,
-        filter=filter, url=request_url)
+        filter=filter, url=request_url, version=VERSION)
 
 
 @app.route("/about.html", methods = ['GET'])
