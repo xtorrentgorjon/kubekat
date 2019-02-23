@@ -54,20 +54,22 @@
   <div class="container"> <!-- Filter should go here -->
     <div class="row">
       <div class="col-lg-12 text-center">
-        <form action = "{{url}}/bootstrap" method = post>
-          {{ form.hidden_tag() }}
-          <div>
-             {{ form.name }}{{ form.submit }}
-          </div>
-          <!--<div class="form-group">
-            <label for="usr">Current filter:</label>
-            <input class="form-control" type="text" value="{{filter}}" readonly>
-          </div>
-          <div class="form-group">
-            <label for="usr">Filter:</label>
-            <input type="text" class="form-control" id="name">
-          </div>-->
-        </form>
+        <div class="row">
+
+          <form action="{{url}}/bootstrap" method="post" role="form">
+            {{ form.csrf }}{{ form.hidden_tag() }}
+
+            <div class="col-9 col-sm-10 col-md-11" id="form_text_input">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="{{filter}}">
+            </div>
+
+            <div class="col-3 col-sm-2 col-md-1" id="form_button">
+              <button type="submit" class="btn btn-success">Filter</button>
+            </div>
+
+          </form>
+
+        </div>
       </div>
     </div>
   </div>
@@ -134,7 +136,7 @@
                   {{labelkey}}:{{labelvalue}}</br>
                   {% endfor %}
                   {% else %}
-                  [No Labels]
+                  None
                   {% endif %}</div></td>
                 <td class="d-none d-lg-block">{{app.type}}</td>
               </tr>
