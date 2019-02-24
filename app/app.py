@@ -59,7 +59,7 @@ def application_bootstrap():
     correct_resources, incorrect_resources = lc.get_correct_resources(), lc.get_incorrect_resources()
 
     request_url = "http://"+request.host
-    if (INGRESS_TLS):
+    if (INGRESS_TLS == "True"):
         request_url = "https://"+request.host
 
     str_filter=list_without_special_characters(filter)
