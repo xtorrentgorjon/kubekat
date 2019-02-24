@@ -87,7 +87,7 @@
             <tbody>
             {% for app in correct_resources %}
               <tr>
-                <th>{{app.metadata.namespace}}</td>
+                <td>{{app.metadata.namespace}}</td>
                 <td>{{app.metadata.name}}</td>
                 <td><div class="column-text-left">
                   {% if app.metadata.labels is mapping %}
