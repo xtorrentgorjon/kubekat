@@ -1,4 +1,4 @@
-# kubernetes-label-checker
+# kubekat
 Application that checks for kubernetes pods with missing labels.
 
 
