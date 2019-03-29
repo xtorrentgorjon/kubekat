@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 #from flask_wtf import Form
 #from wtforms import TextField
+from flask import jsonify
 import random
 import string
 
@@ -43,6 +44,22 @@ def application():
         request_url = "https://"+request.host
 
     return render_template('index.html', url=request_url, version=VERSION, pvc_list=CACHE_RESULTS)
+
+
+# Main
+@app.route("/api/v1/get/all", methods = ['GET'])
+def api_endpoint_all():
+    lc = pvc_checker(app)
+    app.logger.info('New API request.')
+    global CACHE_RESULTS
+    if CACHE_RESULTS == []:
+        CACHE_RESULTS = lc.check_all_namespaces()
+
+    request_url = "http://"+request.host
+    if (INGRESS_TLS):
+        request_url = "https://"+request.host
+
+    return jsonify(CACHE_RESULTS)
 
 
 @app.route("/about.html", methods = ['GET'])
