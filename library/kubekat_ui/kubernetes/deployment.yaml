@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubekat-ui
+  labels:
+    app: kubekat-ui
+    sla: low
+    maintainer: "xtorrent"
+    team: SRE
+spec:
+  selector:
+    matchLabels:
+      app: kubekat-ui
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kubekat-ui
+    spec:
+      #serviceAccountName: kubedog
+      containers:
+      - name: kubekat-ui
+        image: sendotux/kubekat-ui:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: kubekat-ui-configmap
