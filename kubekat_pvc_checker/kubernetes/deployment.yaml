@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubedog
+  labels:
+    app: kubedog
+    sla: low
+    maintainer: "xtorrent"
+    team: SRE
+spec:
+  selector:
+    matchLabels:
+      app: kubedog
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kubedog
+    spec:
+      serviceAccountName: kubedog
+      containers:
+      - name: kubedog
+        image: sendotux/kubernetes-pvc-checker:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: kubedog-configmap

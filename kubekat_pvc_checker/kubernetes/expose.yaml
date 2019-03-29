@@ -1,0 +1,34 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: kubedog
+  name: kubedog
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: kubedog
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kubedog
+spec:
+  rules:
+  - host: pvc-checker.gerimedica.io
+    http:
+      paths:
+      - backend:
+          serviceName: kubedog
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - pvc-checker.gerimedica.io
+    secretName: wildcard-gerimedica-io
