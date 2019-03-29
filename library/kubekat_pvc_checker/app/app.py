@@ -1,12 +1,13 @@
 from flask import Flask, request, render_template
-from flask_wtf import Form
-from wtforms import TextField
+#from flask_wtf import Form
+#from wtforms import TextField
 import random
 import string
 
-from functions.functions import *
+from pvc_checker.pvc_checker import pvc_checker
 import argparse
 import os
+
 
 app = Flask(__name__)
 
