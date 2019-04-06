@@ -60,6 +60,12 @@ class label_checker():
                         else: # Check only that label exists.
                             if filter not in resource["metadata"].labels:
                                 filtered = True
+                resource = {
+                    'namespace':resource["metadata"].namespace,
+                    'name':resource["metadata"].name,
+                    'labels':resource["metadata"].labels,
+                    'type':resource["type"],
+                }
                 if filtered:
                     self.__resource_incorrect_labels.append(resource)
                 else:

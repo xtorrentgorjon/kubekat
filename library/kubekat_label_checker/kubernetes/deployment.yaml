@@ -2,29 +2,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kubekat
+  name: kubekat-label-checker
   labels:
-    app: kubekat
+    app: kubekat-label-checker
     sla: low
     maintainer: "xtorrent"
     team: SRE
 spec:
   selector:
     matchLabels:
-      app: kubekat
+      app: kubekat-label-checker
   replicas: 1
   template:
     metadata:
       labels:
-        app: kubekat
+        app: kubekat-label-checker
     spec:
-      serviceAccountName: kubekat
+      serviceAccountName: kubekat-label-checker
       containers:
-      - name: kubekat
-        image: sendotux/kubernetes-label-checker:dev1.1
+      - name: kubekat-label-checker
+        image: sendotux/kubekat-label-checker:dev-1.4.0
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
         envFrom:
         - configMapRef:
-            name: kubekat-configmap
+            name: kubekat-label-checker-configmap
