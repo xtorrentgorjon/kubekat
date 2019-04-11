@@ -2,29 +2,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kubedog
+  name: kubekat-pvc-checker
   labels:
-    app: kubedog
+    app: kubekat-pvc-checker
     sla: low
-    maintainer: "xtorrent"
+    maintainer: "gerimedica-xtorrent"
     team: SRE
 spec:
   selector:
     matchLabels:
-      app: kubedog
+      app: kubekat-pvc-checker
   replicas: 1
   template:
     metadata:
       labels:
-        app: kubedog
+        app: kubekat-pvc-checker
     spec:
-      serviceAccountName: kubedog
+      serviceAccountName: kubekat-pvc-checker
       containers:
-      - name: kubedog
-        image: sendotux/kubernetes-pvc-checker:latest
+      - name: kubekat-pvc-checker
+        image: sendotux/kubekat-pvc-checker:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
         envFrom:
         - configMapRef:
-            name: kubedog-configmap
+            name: kubekat-pvc-checker-configmap

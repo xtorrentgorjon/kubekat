@@ -42,35 +42,8 @@ def string_to_list(input_string):
 def list_without_special_characters(input_list):
     return str(input_list).lstrip('[').rstrip(']').replace('"', '').replace("'","")
 
-# Main
-@app.route("/", methods = ['GET', 'POST'])
-def application_bootstrap():
-    filter = [DEFAULT_FILTER]
-    form = Filter_Form()
-
-    if form.validate_on_submit():
-        filter = form.name.data
-        filter = string_to_list(filter)
-
-
-    lc = label_checker(app)
-    resources = lc.check_all_namespaces()
-    app.logger.info('Detected apps: %s', resources)
-    lc.filter_resource_by_label(filter)
-    correct_resources, incorrect_resources = lc.get_correct_resources(), lc.get_incorrect_resources()
-
-    request_url = "http://"+request.host
-    if (INGRESS_TLS):
-        request_url = "https://"+request.host
-
-    str_filter=list_without_special_characters(filter)
-
-    return render_template('bootstrap.html',
-        form = form, correct_resources=correct_resources,
-        incorrect_resources=incorrect_resources,
-        str_filter=str_filter, url=request_url, version=VERSION)
-
-@app.route("/api/vi/get/all", methods = ['GET'])
+# First test
+@app.route("/api/v1/get/all", methods = ['GET'])
 def api_endpoint_all():
     filter = ['sla']
     form = Filter_Form()

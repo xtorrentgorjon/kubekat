@@ -13,22 +13,3 @@ spec:
     targetPort: 5000
   selector:
     app: kubekat-label-checker
-
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: kubekat-label-checker
-spec:
-  rules:
-  - host: kubekat-label-checker.home.sendotux.net
-    http:
-      paths:
-      - backend:
-          serviceName: kubekat-label-checker
-          servicePort: 80
-        path: /
-  tls:
-  - hosts:
-    - kubekat-label-checker.home.sendotux.net
-    secretName: wildcard.home.sendotux.net

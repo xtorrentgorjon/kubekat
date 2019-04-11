@@ -6,7 +6,7 @@ metadata:
   labels:
     app: kubekat-label-checker
     sla: low
-    maintainer: "xtorrent"
+    maintainer: "gerimedica-xtorrent"
     team: SRE
 spec:
   selector:
@@ -21,7 +21,7 @@ spec:
       serviceAccountName: kubekat-label-checker
       containers:
       - name: kubekat-label-checker
-        image: sendotux/kubekat-label-checker:dev-1.4.0
+        image: sendotux/kubekat-label-checker:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 5000

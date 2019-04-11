@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>KubeKat - Kubernetes Label Checker {{version}}</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon_cat.ico') }}">
+
+  <!-- Bootstrap core CSS -->
+  <!--<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.extra.css') }}">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <img src="{{url_for('static', filename='images/cat-icon.png')}}" width="30" height="30" class="d-inline-block align-top" alt="">
+      <a class="navbar-brand" href="#">KubeKat {{version}}</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container"> <!-- Alert should go here -->
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        {% if correct_resources|length == 0 %}
+        <div class="alert alert-warning alert-dismissible">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Oops!</strong> Your query had no matches.
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="container"> <!-- Filter should go here -->
+    <div class="row">
+
+          <form action="{{url}}" method="post" role="form">
+            {{ form.csrf }}{{ form.hidden_tag() }}
+
+            <div class="col-9 col-sm-10 col-md-11" id="form_text_input">
+                  <input autocapitalize=off type="text" class="form-control" id="name" name="name" value="{{str_filter}}">
+            </div>
+
+            <div class="col-3 col-sm-2 col-md-1" id="form_button">
+              <button type="submit" class="btn btn-success">Filter</button>
+            </div>
+
+          </form>
+    </div>
+  </div>
+
+  {% if correct_resources|length > 0 %}
+  <div class="container"> <!-- Matches should go here  -->
+    <div class="row">
+      <div class="col text-center d-none d-md-block">
+        <h2>Matched Resources</h2>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Namespace</th>
+                <th>Resource Name</th>
+                <th>Labels</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for app in correct_resources %}
+              <tr>
+                <td>{{app.metadata.namespace}}</td>
+                <td>{{app.metadata.name}}</td>
+                <td><div class="column-text-left">
+                  {% if app.metadata.labels is mapping %}
+                  {% for labelkey, labelvalue in app.metadata.labels.items() %}
+                  {{labelkey}}:{{labelvalue}}</br>
+                  {% endfor %}
+                  {% else %}
+                  [No Labels]
+                  {% endif %}</div></td>
+                <td>{{app.type}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="col text-center d-block d-md-none">
+          <h2>Matched Resources</h2>
+          <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Resource Name</th>
+                  <th>Labels</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for app in correct_resources %}
+                <tr>
+                  <td>{{app.metadata.name}}</td>
+                  <td><div class="column-text-left">
+                    {% if app.metadata.labels is mapping %}
+                    {% for labelkey, labelvalue in app.metadata.labels.items() %}
+                    {{labelkey}}:{{labelvalue}}</br>
+                    {% endfor %}
+                    {% else %}
+                    [No Labels]
+                    {% endif %}</div></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if incorrect_resources|length > 0 %}
+  <div class="container"> <!-- Matches should go here -->
+    <div class="row">
+      <div class="col text-center d-none d-md-block">
+        <h2>Unmatched Resources</h2>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Namespace</th>
+                <th>Resource Name</th>
+                <th>Labels</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for app in incorrect_resources %}
+              <tr>
+                <td>{{app.metadata.namespace}}</td>
+                <td>{{app.metadata.name}}</td>
+                <td><div class="column-text-left">
+                  {% if app.metadata.labels is mapping %}
+                  {% for labelkey, labelvalue in app.metadata.labels.items() %}
+                  {{labelkey}}:{{labelvalue}}</br>
+                  {% endfor %}
+                  {% else %}
+                  None
+                  {% endif %}</div></td>
+                <td>{{app.type}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+      </div>
+
+      <div class="col text-center d-block d-md-none">
+        <h2>Unmatched Resources</h2>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Resource Name</th>
+                <th>Labels</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for app in incorrect_resources %}
+              <tr>
+                <td>{{app.metadata.name}}</td>
+                <td><div class="column-text-left">
+                  {% if app.metadata.labels is mapping %}
+                  {% for labelkey, labelvalue in app.metadata.labels.items() %}
+                  {{labelkey}}:{{labelvalue}}</br>
+                  {% endfor %}
+                  {% else %}
+                  None
+                  {% endif %}</div></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+</body>
+
+</html>

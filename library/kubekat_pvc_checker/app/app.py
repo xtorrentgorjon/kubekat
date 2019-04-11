@@ -31,6 +31,7 @@ def add_header(response):
 
 
 # Main
+"""
 @app.route("/", methods = ['GET'])
 def application():
     lc = pvc_checker(app)
@@ -44,7 +45,7 @@ def application():
         request_url = "https://"+request.host
 
     return render_template('index.html', url=request_url, version=VERSION, pvc_list=CACHE_RESULTS)
-
+"""
 
 # Main
 @app.route("/api/v1/get/all", methods = ['GET'])

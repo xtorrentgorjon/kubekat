@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template
+from flask import jsonify
 #from flask_wtf import Form
 #from wtforms import TextField
 #from flask import jsonify
@@ -15,6 +16,9 @@ import os
 app = Flask(__name__)
 
 INGRESS_TLS = os.environ['INGRESS_TLS']
+
+
+
 VERSION = "0.1.0"
 
 CACHE_RESULTS = []
@@ -32,10 +36,17 @@ def add_header(response):
     return response
 
 
-# Main
-@app.route("/", methods = ['GET'])
-def application():
-    response = urllib.request.urlopen('https://pvc-checker.gerimedica.io/api/v1/get/all')
+# Label-checker
+@app.route("/label", methods = ['GET'])
+def label_checker_call():
+    response = urllib.request.urlopen('http://{}:80/api/v1/get/all'.format(os.environ['KUBEKAT_LABEL_CHECKER_SERVICE_HOST']))
+
+    response_data = response.read()
+
+    label_list = list(json.loads(response_data.decode("utf-8")))
+
+    return jsonify(label_list)
+    """
     response_data = response.read()
 
     pvc_list = list(json.loads(response_data.decode("utf-8")))
@@ -44,7 +55,22 @@ def application():
     if (INGRESS_TLS):
         request_url = "https://"+request.host
 
-    return render_template('index.html', url=request_url, version=VERSION, pvc_list=pvc_list)
+    return render_template('index_label_checker.html', url=request_url, version=VERSION, pvc_list=pvc_list)
+    """
+
+# Main
+@app.route("/pvc", methods = ['GET'])
+def pvc_checker_call():
+    response = urllib.request.urlopen('http://{}:80/api/v1/get/all'.format(os.environ['KUBEKAT_PVC_CHECKER_SERVICE_HOST']))
+    response_data = response.read()
+
+    pvc_list = list(json.loads(response_data.decode("utf-8")))
+
+    request_url = "http://"+request.host
+    if (INGRESS_TLS):
+        request_url = "https://"+request.host
+
+    return render_template('index_pvc_checker.html', url=request_url, version=VERSION, pvc_list=pvc_list)
 
 
 

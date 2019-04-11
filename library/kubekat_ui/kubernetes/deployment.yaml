@@ -6,7 +6,7 @@ metadata:
   labels:
     app: kubekat-ui
     sla: low
-    maintainer: "xtorrent"
+    maintainer: "gerimedica-xtorrent"
     team: SRE
 spec:
   selector:
@@ -18,7 +18,7 @@ spec:
       labels:
         app: kubekat-ui
     spec:
-      #serviceAccountName: kubedog
+      serviceAccountName: kubekat-ui
       containers:
       - name: kubekat-ui
         image: sendotux/kubekat-ui:latest

@@ -3,4 +3,4 @@ data:
   INGRESS_TLS: 'True'
 kind: ConfigMap
 metadata:
-  name: kubedog-configmap
+  name: kubekat-pvc-checker-configmap
