@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubekat
+  labels:
+    app: kubekat
+    sla: low
+    maintainer: "xtorrent"
+    team: SRE
+spec:
+  selector:
+    matchLabels:
+      app: kubekat
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kubekat
+    spec:
+      serviceAccountName: kubekat
+      containers:
+      - name: kubekat
+        image: sendotux/kubernetes-label-checker:dev1.1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: kubekat-configmap
