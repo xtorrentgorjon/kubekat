@@ -28,24 +28,6 @@ def add_header(response):
         response.headers['Cache-Control'] = 'no-store'
     return response
 
-
-# Main
-"""
-@app.route("/", methods = ['GET'])
-def application():
-    lc = pvc_checker(app)
-    app.logger.info('New HTTP request.')
-    global CACHE_RESULTS
-    if CACHE_RESULTS == []:
-        CACHE_RESULTS = lc.check_all_namespaces()
-
-    request_url = "http://"+request.host
-    if (INGRESS_TLS):
-        request_url = "https://"+request.host
-
-    return render_template('index.html', url=request_url, version=VERSION, pvc_list=CACHE_RESULTS)
-"""
-
 # Main
 @app.route("/api/v1/get/all", methods = ['GET'])
 def api_endpoint_all():
@@ -60,12 +42,6 @@ def api_endpoint_all():
         request_url = "https://"+request.host
 
     return jsonify(result)
-
-
-@app.route("/about.html", methods = ['GET'])
-def aboutpage():
-    return render_template('about.html')
-
 
 
 if __name__ == "__main__":

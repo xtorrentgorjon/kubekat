@@ -60,12 +60,6 @@ def label_checker_call():
     label_list = list(json.loads(response_data.decode("utf-8")))
     #return jsonify(label_list)
 
-    #response_data = response.read()
-    #pvc_list = list(json.loads(response_data.decode("utf-8")))
-
-    app.logger.error('Type: %s', type(label_list[0]["matched"]))
-    app.logger.error('Value: %s', label_list[0]["matched"])
-
     correct_resources=label_list[0]["matched"]
     incorrect_resources=label_list[0]["unmatched"]
 

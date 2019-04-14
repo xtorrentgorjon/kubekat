@@ -61,13 +61,7 @@ def api_endpoint_all():
 
     str_filter=list_without_special_characters(filter)
 
-    return jsonify(matched_resources)
-
-
-@app.route("/about.html", methods = ['GET'])
-def aboutpage():
-    return render_template('about.html')
-
+    return jsonify([{"matched":matched_resources, "unmatched":unmatched_resources}])
 
 
 if __name__ == "__main__":
