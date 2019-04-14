@@ -2,29 +2,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kubekat-pvc-checker
+  name: kubekat-label-checker
   labels:
-    app: kubekat-pvc-checker
+    app: kubekat-label-checker
     sla: low
     maintainer: "xtorrent"
     team: SRE
 spec:
   selector:
     matchLabels:
-      app: kubekat-pvc-checker
+      app: kubekat-label-checker
   replicas: 1
   template:
     metadata:
       labels:
-        app: kubekat-pvc-checker
+        app: kubekat-label-checker
     spec:
-      serviceAccountName: kubekat-pvc-checker
+      serviceAccountName: kubekat-label-checker
       containers:
-      - name: kubekat-pvc-checker
-        image: sendotux/kubekat-pvc-checker:latest
+      - name: kubekat-label-checker
+        image: sendotux/kubekat-label-checker:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
         envFrom:
         - configMapRef:
-            name: kubekat-pvc-checker-configmap
+            name: kubekat-label-checker-configmap

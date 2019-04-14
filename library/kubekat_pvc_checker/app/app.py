@@ -9,11 +9,10 @@ from pvc_checker.pvc_checker import pvc_checker
 import argparse
 import os
 
-
 app = Flask(__name__)
 
 INGRESS_TLS = os.environ['INGRESS_TLS']
-VERSION = "0.1.0"
+VERSION = "0.1.2"
 
 CACHE_RESULTS = []
 
@@ -29,47 +28,25 @@ def add_header(response):
         response.headers['Cache-Control'] = 'no-store'
     return response
 
-
-# Main
-@app.route("/", methods = ['GET'])
-def application():
-    lc = pvc_checker(app)
-    app.logger.info('New HTTP request.')
-    global CACHE_RESULTS
-    if CACHE_RESULTS == []:
-        CACHE_RESULTS = lc.check_all_namespaces()
-
-    request_url = "http://"+request.host
-    if (INGRESS_TLS):
-        request_url = "https://"+request.host
-
-    return render_template('index.html', url=request_url, version=VERSION, pvc_list=CACHE_RESULTS)
-
-
 # Main
 @app.route("/api/v1/get/all", methods = ['GET'])
 def api_endpoint_all():
     lc = pvc_checker(app)
-    app.logger.info('New API request.')
-    global CACHE_RESULTS
-    if CACHE_RESULTS == []:
-        CACHE_RESULTS = lc.check_all_namespaces()
+    app.logger.error('New API request.')
+
+    app.logger.error('Answering with kubekat pvc checker version {}'.format(VERSION))
+    result = lc.check_all_namespaces()
 
     request_url = "http://"+request.host
     if (INGRESS_TLS):
         request_url = "https://"+request.host
 
-    return jsonify(CACHE_RESULTS)
-
-
-@app.route("/about.html", methods = ['GET'])
-def aboutpage():
-    return render_template('about.html')
-
+    return jsonify(result)
 
 
 if __name__ == "__main__":
     if(args.debug):
+        app.logger.debug('Starting kubekat pvc checker version {}'.format(VERSION))
         app.run(debug=True, host="0.0.0.0")
     else:
         app.run(host="0.0.0.0")

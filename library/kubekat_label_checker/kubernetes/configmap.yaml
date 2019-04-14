@@ -1,6 +1,7 @@
 apiVersion: v1
 data:
   INGRESS_TLS: 'True'
+  DEFAULT_FILTER: 'sla'
 kind: ConfigMap
 metadata:
-  name: kubekat-pvc-checker-configmap
+  name: kubekat-label-checker-configmap
