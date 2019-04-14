@@ -55,7 +55,7 @@
   <div class="container"> <!-- Filter should go here -->
     <div class="row">
 
-          <form action="{{url}}" method="post" role="form">
+          <form action="{{url}}/label" method="post" role="form">
             {{ form.csrf }}{{ form.hidden_tag() }}
 
             <div class="col-9 col-sm-10 col-md-11" id="form_text_input">
@@ -73,7 +73,7 @@
   {% if correct_resources|length > 0 %}
   <div class="container"> <!-- Matches should go here  -->
     <div class="row">
-      <div class="col text-center d-none d-md-block">
+      <div class="col text-left d-none d-md-block">
         <h2>Matched Resources</h2>
         <table class="table table-striped">
             <thead>
@@ -87,23 +87,23 @@
             <tbody>
             {% for app in correct_resources %}
               <tr>
-                <td>{{app.metadata.namespace}}</td>
-                <td>{{app.metadata.name}}</td>
+                <td>{{app["namespace"]}}</td>
+                <td>{{app["name"]}}</td>
                 <td><div class="column-text-left">
-                  {% if app.metadata.labels is mapping %}
-                  {% for labelkey, labelvalue in app.metadata.labels.items() %}
+                  {% if app["labels"] is mapping %}
+                  {% for labelkey, labelvalue in app["labels"].items() %}
                   {{labelkey}}:{{labelvalue}}</br>
                   {% endfor %}
                   {% else %}
                   [No Labels]
                   {% endif %}</div></td>
-                <td>{{app.type}}</td>
+                <td>{{app["type"]}}</td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
         </div>
-        <div class="col text-center d-block d-md-none">
+        <div class="col text-left d-block d-md-none">
           <h2>Matched Resources</h2>
           <table class="table table-striped">
               <thead>
@@ -115,10 +115,10 @@
               <tbody>
               {% for app in correct_resources %}
                 <tr>
-                  <td>{{app.metadata.name}}</td>
+                  <td>{{app["name"]}}</td>
                   <td><div class="column-text-left">
-                    {% if app.metadata.labels is mapping %}
-                    {% for labelkey, labelvalue in app.metadata.labels.items() %}
+                    {% if app["labels"] is mapping %}
+                    {% for labelkey, labelvalue in app["labels"].items() %}
                     {{labelkey}}:{{labelvalue}}</br>
                     {% endfor %}
                     {% else %}
@@ -137,7 +137,7 @@
   {% if incorrect_resources|length > 0 %}
   <div class="container"> <!-- Matches should go here -->
     <div class="row">
-      <div class="col text-center d-none d-md-block">
+      <div class="col text-left d-none d-md-block">
         <h2>Unmatched Resources</h2>
         <table class="table table-striped">
             <thead>
@@ -151,24 +151,24 @@
             <tbody>
             {% for app in incorrect_resources %}
               <tr>
-                <td>{{app.metadata.namespace}}</td>
-                <td>{{app.metadata.name}}</td>
+                <td>{{app["namespace"]}}</td>
+                <td>{{app["name"]}}</td>
                 <td><div class="column-text-left">
-                  {% if app.metadata.labels is mapping %}
-                  {% for labelkey, labelvalue in app.metadata.labels.items() %}
+                  {% if app["labels"] is mapping %}
+                  {% for labelkey, labelvalue in app["labels"].items() %}
                   {{labelkey}}:{{labelvalue}}</br>
                   {% endfor %}
                   {% else %}
                   None
                   {% endif %}</div></td>
-                <td>{{app.type}}</td>
+                <td>{{app["type"]}}</td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
       </div>
 
-      <div class="col text-center d-block d-md-none">
+      <div class="col text-left d-block d-md-none">
         <h2>Unmatched Resources</h2>
         <table class="table table-striped">
             <thead>
@@ -180,10 +180,10 @@
             <tbody>
             {% for app in incorrect_resources %}
               <tr>
-                <td>{{app.metadata.name}}</td>
+                <td>{{app["name"]}}</td>
                 <td><div class="column-text-left">
-                  {% if app.metadata.labels is mapping %}
-                  {% for labelkey, labelvalue in app.metadata.labels.items() %}
+                  {% if app["labels"] is mapping %}
+                  {% for labelkey, labelvalue in app["labels"].items() %}
                   {{labelkey}}:{{labelvalue}}</br>
                   {% endfor %}
                   {% else %}

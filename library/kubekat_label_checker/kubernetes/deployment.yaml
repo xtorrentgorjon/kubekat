@@ -6,7 +6,7 @@ metadata:
   labels:
     app: kubekat-label-checker
     sla: low
-    maintainer: "gerimedica-xtorrent"
+    maintainer: "xtorrent"
     team: SRE
 spec:
   selector:

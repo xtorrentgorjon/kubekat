@@ -28,9 +28,7 @@ class kubernetes_query():
 
     def execute_command_in_pod(self, namespace, pod, command, container):
         api = client.CoreV1Api()
-        self.__app.logger.info("Executing command '{}' in pod '{}' from namespace '{}'".format(str(command), str(pod), str(namespace)))
         output = stream(api.connect_get_namespaced_pod_exec, pod, namespace, command=command, stderr=True, stdin=False, stdout=True, tty=False, container=container)
-        self.__app.logger.info("Result: '{}'".format(output))
         return output
 
     def list_namespaces(self):
