@@ -12,15 +12,17 @@ Pre:
   - kubectl create namespace testing
   - kubectl -n testing get pods
 
-Job1:
+Build:
   stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
   script:
-  - echo docker ps
-  
-Job2:
-  stage: build
-  script:
-  - echo docker images
+    - CI_REGISTRY=hub.docker.com
+    - CI_REGISTRY_USER=sendotux
+    - CI_REGISTRY_PASSWORD=BLABLABLA
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
   
 Job3:
   stage: test
