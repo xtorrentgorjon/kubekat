@@ -28,7 +28,7 @@ Build:
     - echo $CI_COMMIT_TAG
     - pwd
     - ls -la
-    - /kaniko/executor --context $CI_PROJECT_DIR/library/kubekat-ui --dockerfile $CI_PROJECT_DIR/library/kubekat-ui/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
+    - /kaniko/executor --context $CI_PROJECT_DIR/library/ --dockerfile $CI_PROJECT_DIR/library/kubekat_ui/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
   
 Job3:
   stage: test
