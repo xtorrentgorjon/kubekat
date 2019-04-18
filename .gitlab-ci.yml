@@ -7,32 +7,26 @@ stages:
 Pre:
   stage: preparation
   script:
-  - env
-  - python3 ci-kube.py
-  - kubectl get pods
+  - kubectl create namespace testing
+  - kubectl -n testing get pods
 
 Job1:
   stage: build
   script:
-  - apt-get update -qy
-  - apt-get install -y python-dev python-pip
-  - echo "HARAMBE VS BOKITO DEATHMATCH"
+  - docker ps
   
 Job2:
   stage: build
   script:
-  - echo "FLOQUET DE NEU JUMPS INTO THE RING"
+  - docker images
   
 Job3:
   stage: test
   script:
-  - echo "WOOOOOOOAARGGGGGGG"
-  - date
-  - sleep 5
-  - date
+  - curl -IL https://kubekat.home.sendotux.net/pvc
  
 Final:
   stage: final
   script:
-  - kubectl get namespaces
+  - kubectl delete namespace testing
   
