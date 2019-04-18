@@ -9,8 +9,8 @@ Pre:
   script:
   - woops=$RANDOM
   - echo $whoops
-  - kubectl create namespace testing
-  - kubectl -n testing get pods
+  - echo kubectl create namespace testing
+  - echo kubectl -n testing get pods
 
 Build:
   stage: build
@@ -33,5 +33,5 @@ Job3:
 Final:
   stage: final
   script:
-  - kubectl delete namespace testing
+  - echo kubectl delete namespace testing
   - echo $whoops
