@@ -13,12 +13,12 @@ Pre:
 Job1:
   stage: build
   script:
-  - docker ps
+  - echo docker ps
   
 Job2:
   stage: build
   script:
-  - docker images
+  - echo docker images
   
 Job3:
   stage: test
