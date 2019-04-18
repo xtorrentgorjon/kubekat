@@ -7,6 +7,8 @@ stages:
 Pre:
   stage: preparation
   script:
+  - woops=$RANDOM
+  - echo $whoops
   - kubectl create namespace testing
   - kubectl -n testing get pods
 
@@ -23,10 +25,10 @@ Job2:
 Job3:
   stage: test
   script:
-  - curl -IL https://kubekat.home.sendotux.net/pvc
+  - curl -sSIL https://kubekat.home.sendotux.net/pvc
  
 Final:
   stage: final
   script:
   - kubectl delete namespace testing
-  
+  - echo $whoops
