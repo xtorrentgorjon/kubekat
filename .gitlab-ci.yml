@@ -1,13 +1,23 @@
 stages:
+  - build
   - test
-  - yomama
 
-test:
+Job1:
+  stage: build
   script:
   - apt-get update -qy
   - apt-get install -y python-dev python-pip
   - echo "HARAMBE VS BOKITO DEATHMATCH"
   
-yomama:
+Job2:
+  stage: build
   script:
   - echo "FLOQUET DE NEU JUMPS INTO THE RING"
+  
+Job3:
+  stage: test
+  script:
+  - echo "WOOOOOOOAARGGGGGGG"
+  - date
+  - sleep 5
+  - date
