@@ -1,5 +1,13 @@
+stages:
+  - test
+  - yomama
+
 test:
   script:
   - apt-get update -qy
   - apt-get install -y python-dev python-pip
   - echo "HARAMBE VS BOKITO DEATHMATCH"
+  
+yomama:
+  script:
+  - echo "FLOQUET DE NEU JUMPS INTO THE RING"
