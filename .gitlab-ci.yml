@@ -4,33 +4,44 @@ stages:
   - test
   - final
   
-Pre:
+Pre-steps:
   stage: preparation
   script:
-  - kubectl get namespaces
+  - env
+  - echo kubectl create namespace testing
+  - echo kubectl -n testing get pods
 
-Job1:
+
+Build Docker Image:
   stage: build
+  services:
+  - docker:dind
   script:
-  - apt-get update -qy
-  - apt-get install -y python-dev python-pip
-  - echo "HARAMBE VS BOKITO DEATHMATCH"
+    - DOCKER_HOST=tcp://localhost:2375
+    - export DOCKER_HOST
+    - CI_REGISTRY=hub.docker.com
+    - CI_REGISTRY_USER=sendotux
+    - CI_REGISTRY_PASSWORD=$DOCKER_HUB_PASSWORD
+    - CI_REGISTRY_IMAGE=kubekat-ui
+    - CI_COMMIT_TAG=latest
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+    - cd library && docker build -t sendotux/kubekat-pvc-checker:latest -f kubekat_ui/Dockerfile . && docker push sendotux/kubekat-pvc-checker:latest
   
-Job2:
-  stage: build
-  script:
-  - echo "FLOQUET DE NEU JUMPS INTO THE RING"
-  
-Job3:
+Test pvc HTTPS:
   stage: test
   script:
-  - echo "WOOOOOOOAARGGGGGGG"
-  - date
-  - sleep 5
-  - date
- 
-Final:
+  - curl -sSIL https://kubekat.home.sendotux.net/pvc
+Test label HTTPS:
+  stage: test
+  script:
+  - curl -sSIL https://kubekat.home.sendotux.net/label
+Test about HTTPS:
+  stage: test
+  script:
+  - curl -sSIL https://kubekat.home.sendotux.net/about
+  
+End-steps:
   stage: final
   script:
-  - kubectl get namespaces
-  
+  - echo kubectl delete namespace testing
+  - echo $whoops
