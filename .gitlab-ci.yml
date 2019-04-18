@@ -8,6 +8,7 @@ Pre:
   stage: preparation
   script:
   - env
+  - python3 ci-kube.py
   - kubectl get pods
 
 Job1:
