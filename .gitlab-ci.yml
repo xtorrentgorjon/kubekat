@@ -7,14 +7,6 @@ stages:
 Pre:
   stage: preparation
   script:
-  - apt-get update
-  - apt-get install -y apt-transport-https
-  - apt-get install -y curl
-  - curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-  - touch /etc/apt/sources.list.d/kubernetes.list 
-  - echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
-  - apt-get update
-  - apt-get install -y kubectl
   - kubectl -n gitlab-runner get pods
 
 Job1:
