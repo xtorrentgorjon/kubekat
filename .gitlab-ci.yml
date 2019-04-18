@@ -23,6 +23,7 @@ Build:
     - CI_REGISTRY_IMAGE=kubekat-ui
     - CI_COMMIT_TAG=latest
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - cat /kaniko/.docker/config.json
     - echo $CI_PROJECT_DIR
     - echo $CI_REGISTRY_IMAGE
     - echo $CI_COMMIT_TAG
