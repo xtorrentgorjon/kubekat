@@ -4,7 +4,7 @@ stages:
   - test
   - final
   
-Pre:
+Pre-steps:
   stage: preparation
   script:
   - env
@@ -32,7 +32,7 @@ Build:
     - /kaniko/executor --context $CI_PROJECT_DIR/library --dockerfile $CI_PROJECT_DIR/library/kubekat_ui/Dockerfile --destination kubekat-ui:latest
     
     
-Build:
+Build Docker Image:
   stage: build
   services:
   - docker:dind
@@ -47,12 +47,20 @@ Build:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - cd library && docker build -t sendotux/kubekat-pvc-checker:latest -f kubekat_ui/Dockerfile . && docker push sendotux/kubekat-pvc-checker:latest
   
-Job3:
+Test pvc HTTPS:
   stage: test
   script:
   - curl -sSIL https://kubekat.home.sendotux.net/pvc
- 
-Final:
+Test label HTTPS:
+  stage: test
+  script:
+  - curl -sSIL https://kubekat.home.sendotux.net/label
+Test about HTTPS:
+  stage: test
+  script:
+  - curl -sSIL https://kubekat.home.sendotux.net/about
+  
+End-steps:
   stage: final
   script:
   - echo kubectl delete namespace testing
