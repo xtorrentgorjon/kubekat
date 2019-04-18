@@ -34,9 +34,8 @@ Build:
     
 Build:
   stage: build
-  image:
-    name: docker:dind
-    entrypoint: [""]
+  services:
+  - docker:dind
   script:
     - CI_REGISTRY=hub.docker.com
     - CI_REGISTRY_USER=sendotux
