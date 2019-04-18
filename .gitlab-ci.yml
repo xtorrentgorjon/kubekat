@@ -37,6 +37,8 @@ Build:
   services:
   - docker:dind
   script:
+    - DOCKER_HOST=tcp://localhost:2375
+    - export DOCKER_HOST
     - CI_REGISTRY=hub.docker.com
     - CI_REGISTRY_USER=sendotux
     - CI_REGISTRY_PASSWORD=$DOCKER_HUB_PASSWORD
