@@ -12,7 +12,6 @@ Pre-steps:
   - echo kubectl -n testing get pods
 
 Build:
-  stage: unused
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
