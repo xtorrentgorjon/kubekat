@@ -7,8 +7,7 @@ stages:
 Pre:
   stage: preparation
   script:
-  - woops=$RANDOM
-  - echo $whoops
+  - env
   - echo kubectl create namespace testing
   - echo kubectl -n testing get pods
 
@@ -23,6 +22,9 @@ Build:
     - CI_REGISTRY_PASSWORD=$DOCKER_HUB_PASSWORD
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - cat /kaniko/.docker/config.json
+    - echo $CI_PROJECT_DIR
+    - echo $CI_REGISTRY_IMAGE
+    - echo $CI_COMMIT_TAG
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
   
 Job3:
