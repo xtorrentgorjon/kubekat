@@ -8,7 +8,8 @@ Pre-steps:
   stage: preparation
   script:
   - env
-  - echo kubectl create namespace testing
+  - kubectl create namespace testing
+  - kubectl create namespace testing || echo "Created namespace"
   - echo kubectl -n testing get pods
 
 
