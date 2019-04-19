@@ -6,10 +6,10 @@ stages:
   
 Pre-steps:
   stage: preparation
+  allow_failure: true
   script:
   - env
   - kubectl create namespace testing
-  - kubectl create namespace testing || echo "Created namespace"
   - echo kubectl -n testing get pods
 
 
@@ -43,6 +43,6 @@ Test about HTTPS:
   
 End-steps:
   stage: final
+  allow_failure: true
   script:
-  - echo kubectl delete namespace testing
-  - echo $whoops
+  - kubectl delete namespace testing
