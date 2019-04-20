@@ -26,9 +26,10 @@ Kubekat Docker Build:
     - CI_REGISTRY_IMAGE=kubekat-ui
     - CI_COMMIT_TAG=latest
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
-    - cd library && docker build -t sendotux/kubekat-ui-checker:latest -f kubekat_ui/Dockerfile . && docker push sendotux/kubekat-ui-checker:latest
-    - cd library && docker build -t sendotux/kubekat-pvc-checker:latest -f kubekat_pvc/Dockerfile . && docker push sendotux/kubekat-pvc-checker:latest
-    - cd library && docker build -t sendotux/kubekat-label-checker:latest -f kubekat_label/Dockerfile . && docker push sendotux/kubekat-label-checker:latest
+    - cd library
+    - docker build -t sendotux/kubekat-ui-checker:latest -f kubekat_ui/Dockerfile . && docker push sendotux/kubekat-ui-checker:latest
+    - docker build -t sendotux/kubekat-pvc-checker:latest -f kubekat_pvc/Dockerfile . && docker push sendotux/kubekat-pvc-checker:latest
+    - docker build -t sendotux/kubekat-label-checker:latest -f kubekat_label/Dockerfile . && docker push sendotux/kubekat-label-checker:latest
 
 
 
