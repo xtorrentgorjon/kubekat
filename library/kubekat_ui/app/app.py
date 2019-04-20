@@ -16,7 +16,7 @@ import os
 app = Flask(__name__)
 
 INGRESS_TLS = os.environ['INGRESS_TLS']
-VERSION = "0.2.0"
+VERSION = "0.3.0"
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--debug', '-d', help="Run in debug mode.", action='store_true')
