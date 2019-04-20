@@ -43,7 +43,7 @@ Kubekat-label Docker:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - cd library && docker build -t sendotux/kubekat-label-checker:latest -f kubekat_label/Dockerfile . && docker push sendotux/kubekat-label-checker:latest
     
-Kubekat-label Docker:
+Kubekat-pvc Docker:
   stage: build
   services:
   - docker:dind
@@ -72,7 +72,9 @@ Test about HTTPS:
   stage: test
   script:
   - curl -sSIL https://kubekat.home.sendotux.net/about
-  
+
+
+
 End-steps:
   stage: final
   allow_failure: true
