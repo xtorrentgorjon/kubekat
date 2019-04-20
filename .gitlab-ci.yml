@@ -1,16 +1,15 @@
 stages:
   - preparation
   - build
+  - install
   - test
   - final
   
 Pre-steps:
   stage: preparation
-  allow_failure: true
+  allow_failure: false
   script:
-  - env
-  - kubectl create namespace testing
-  - echo kubectl -n testing get pods
+  - kubectl -n kubekat get pods
 
 
 Kubekat Docker Build:
@@ -27,11 +26,24 @@ Kubekat Docker Build:
     - CI_COMMIT_TAG=latest
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - cd library
-    - docker build -t sendotux/kubekat-ui-checker:latest -f kubekat_ui/Dockerfile . && docker push sendotux/kubekat-ui-checker:latest
+    - docker build -t sendotux/kubekat-ui:latest -f kubekat_ui/Dockerfile . && docker push sendotux/kubekat-ui:latest
     - docker build -t sendotux/kubekat-pvc-checker:latest -f kubekat_pvc_checker/Dockerfile . && docker push sendotux/kubekat-pvc-checker:latest
     - docker build -t sendotux/kubekat-label-checker:latest -f kubekat_label_checker/Dockerfile . && docker push sendotux/kubekat-label-checker:latest
 
+Kubekat-ui install:
+  stage: install
+  script:
+  - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
 
+Kubekat-pvc install:
+  stage: install
+  script:
+  - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  
+Kubekat-label install:
+  stage: install
+  script:
+  - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
 
 
 Test pvc HTTPS:
@@ -48,9 +60,8 @@ Test about HTTPS:
   - curl -sSIL https://kubekat.home.sendotux.net/about
 
 
-
 End-steps:
   stage: final
-  allow_failure: true
+  allow_failure: false
   script:
-  - kubectl delete namespace testing
+  - kubectl -n kubekat get pods
