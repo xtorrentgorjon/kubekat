@@ -67,7 +67,7 @@ deploy_staging:
   - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   environment:
-    name: test
+    name: kubekat.home.sendotux.net 
     url: https://kubekat.home.sendotux.net
   only:
   - master
