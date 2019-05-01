@@ -1,9 +1,9 @@
 stages:
   - preparation
   - build
-  - install
+  - deploy
   - test
-  #- deploy
+  - deploy
   
 Pre-steps:
   stage: preparation
@@ -30,21 +30,17 @@ Kubekat Docker Build:
     - docker build -t sendotux/kubekat-pvc-checker:latest -f kubekat_pvc_checker/Dockerfile . && docker push sendotux/kubekat-pvc-checker:latest
     - docker build -t sendotux/kubekat-label-checker:latest -f kubekat_label_checker/Dockerfile . && docker push sendotux/kubekat-label-checker:latest
 
-Kubekat-ui install:
-  stage: install
+Kubekat Deploy:
+  stage: deploy
   script:
   - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-
-Kubekat-pvc install:
-  stage: install
-  script:
   - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  
-Kubekat-label install:
-  stage: install
-  script:
   - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-
+  environment:
+    name: kubekat.home.sendotux.net 
+    url: https://kubekat.home.sendotux.net
+  only:
+  - master
 
 Test pvc HTTPS:
   stage: test
