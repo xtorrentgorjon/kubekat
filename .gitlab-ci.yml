@@ -3,7 +3,7 @@ stages:
   - build
   - install
   - test
-  - final
+  - deploy
   
 Pre-steps:
   stage: preparation
@@ -60,8 +60,14 @@ Test about HTTPS:
   - curl -sSIL https://kubekat.home.sendotux.net/about
 
 
-End-steps:
-  stage: final
-  allow_failure: false
+deploy_staging:
+  stage: deploy
   script:
-  - kubectl -n kubekat get pods
+  - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  environment:
+    name: test
+    url: https://kubekat.home.sendotux.net
+  only:
+  - master
