@@ -3,7 +3,7 @@ stages:
   - build
   - install
   - test
-  - deploy
+  #- deploy
   
 Pre-steps:
   stage: preparation
