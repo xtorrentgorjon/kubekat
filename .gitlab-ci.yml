@@ -60,14 +60,3 @@ Test about HTTPS:
   - curl -sSIL https://kubekat.home.sendotux.net/about
 
 
-Kubekat Deploy:
-  stage: deploy
-  script:
-  - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  environment:
-    name: kubekat.home.sendotux.net 
-    url: https://kubekat.home.sendotux.net
-  only:
-  - master
