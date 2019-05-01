@@ -6,6 +6,8 @@ from wtforms import TextField
 import random
 import string
 
+import werkzeug
+
 import json
 import urllib.request
 
@@ -46,6 +48,30 @@ def add_header(response):
     if 'Cache-Control' not in response.headers:
         response.headers['Cache-Control'] = 'no-store'
     return response
+
+# Error handlers
+
+@app.errorhandler(werkzeug.exceptions.InternalServerError)
+def error_http_500(e):
+    error_title = "500 Error"
+    error_text = "Internal Server Error"
+    error_pic = "images/error-http-500.jpg"
+    return render_template('error-http.html', version=VERSION, error_title=error_title, error_text=error_text, error_pic=error_pic), 500
+
+@app.errorhandler(werkzeug.exceptions.NotFound)
+def error_http_404(e):
+    error_title = "404 Error"
+    error_text = "Page Not Found"
+    error_pic = "images/error-http-404.jpg"
+    return render_template('error-http.html', version=VERSION, error_title=error_title, error_text=error_text, error_pic=error_pic), 404
+
+
+@app.route("/error-http-500-test", methods = ['GET'])
+def error500():
+    raise Exception('Oops')
+    return render_template('about.html')
+
+
 
 
 # Label-checker
