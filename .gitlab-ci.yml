@@ -60,7 +60,7 @@ Test about HTTPS:
   - curl -sSIL https://kubekat.home.sendotux.net/about
 
 
-deploy_staging:
+Kubekat Deploy:
   stage: deploy
   script:
   - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
