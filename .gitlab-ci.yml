@@ -4,6 +4,7 @@ stages:
   - deploy
   - test
   - deploy_test
+  - deploy_acc
   - deploy_prod
   
 Pre-steps:
@@ -40,8 +41,6 @@ Deploy on Test:
   environment:
     name: kubekat.home.sendotux.net 
     url: https://kubekat.home.sendotux.net
-  only:
-  - master
 
 Test pvc HTTPS:
   stage: test
@@ -55,7 +54,19 @@ Test about HTTPS:
   stage: test
   script:
   - curl -sSIL https://kubekat.home.sendotux.net/about
-  
+
+Deploy on Production:
+  stage: deploy_acc
+  script:
+  - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  environment:
+    name: acceptance
+    url: https://kubekat.home.sendotux.net
+  when: manual
+  only:
+  - master
 
 Deploy on Production:
   stage: deploy_prod
