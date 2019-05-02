@@ -5,7 +5,7 @@ stages:
   - promote
 
 
-Kubekat Docker Build:
+Docker_Build:
   stage: build
   services:
   - docker:dind
@@ -24,7 +24,7 @@ Kubekat Docker Build:
     - docker build -t sendotux/kubekat-label-checker:latest -f kubekat_label_checker/Dockerfile . && docker push sendotux/kubekat-label-checker:latest
 
 
-Deploy on Test:
+Deploy_Test:
   stage: deploy_test
   script:
   - ls -la
@@ -38,22 +38,34 @@ Deploy on Test:
   environment:
     name: test
     url: https://kubekat.home.sendotux.net
+    on_stop: Stop_Test
+    
+Stop_Test:
+  stage: deploy_test
+  script:
+  - kubectl -n kubekat delete -f library/kubekat_ui/kubernetes/deployment.yaml
+  - kubectl -n kubekat delete -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
+  - kubectl -n kubekat delete -f library/kubekat_label_checker/kubernetes/deployment.yaml
+  when: manual
+  environment:
+    name: test
+    action: stop
 
-Test pvc HTTPS:
+Test_pvc_HTTPS:
   stage: test
   script:
   - curl -sSIL https://kubekat.home.sendotux.net/pvc
-Test label HTTPS:
+Test_label_HTTPS:
   stage: test
   script:
   - curl -sSIL https://kubekat.home.sendotux.net/label
-Test about HTTPS:
+Test_about_HTTPS:
   stage: test
   script:
   - curl -sSIL https://kubekat.home.sendotux.net/about
 
 
-Deploy on Acceptance:
+Deploy_Acceptance:
   stage: promote
   script:
   - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
@@ -67,7 +79,7 @@ Deploy on Acceptance:
   - master
 
 
-Deploy on Production:
+Deploy_Production:
   stage: promote
   script:
   - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
