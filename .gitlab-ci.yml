@@ -28,13 +28,13 @@ Deploy_Test 1/2:
   stage: deploy_test
   script:
   - ls -la
-  - kubectl -n kubekat apply -f library/kubekat_ui/kubernetes/deployment.yaml
-  - kubectl -n kubekat apply -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
-  - kubectl -n kubekat apply -f library/kubekat_label_checker/kubernetes/deployment.yaml
+  - kubectl -n test apply -f library/kubekat_ui/kubernetes/deployment.yaml
+  - kubectl -n test apply -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
+  - kubectl -n test apply -f library/kubekat_label_checker/kubernetes/deployment.yaml
   
-  - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl -n test patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl -n test patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl -n test patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   environment:
     name: test
     url: https://kubekat.home.sendotux.net
@@ -43,9 +43,9 @@ Deploy_Test 1/2:
 Deploy_Test 2/2:
   stage: deploy_test
   script:
-  - kubectl -n kubekat delete -f library/kubekat_ui/kubernetes/deployment.yaml
-  - kubectl -n kubekat delete -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
-  - kubectl -n kubekat delete -f library/kubekat_label_checker/kubernetes/deployment.yaml
+  - kubectl -n test delete -f library/kubekat_ui/kubernetes/deployment.yaml
+  - kubectl -n test delete -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
+  - kubectl -n test delete -f library/kubekat_label_checker/kubernetes/deployment.yaml
   when: manual
   environment:
     name: test
@@ -68,13 +68,13 @@ Test_about_HTTPS:
 Deploy_Acceptance:
   stage: promote
   script:
-  - kubectl -n kubekat apply -f library/kubekat_ui/kubernetes/deployment.yaml
-  - kubectl -n kubekat apply -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
-  - kubectl -n kubekat apply -f library/kubekat_label_checker/kubernetes/deployment.yaml
+  - kubectl -n acceptance apply -f library/kubekat_ui/kubernetes/deployment.yaml
+  - kubectl -n acceptance apply -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
+  - kubectl -n acceptance apply -f library/kubekat_label_checker/kubernetes/deployment.yaml
   
-  - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl -n acceptance patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl -n acceptance patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl -n acceptance patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   environment:
     name: acceptance
     url: https://kubekat.home.sendotux.net
@@ -83,7 +83,7 @@ Deploy_Acceptance:
   - master
 
 
-Deploy_Production:
+Deploy_Production 1/2:
   stage: promote
   script:
   - kubectl -n kubekat apply -f library/kubekat_ui/kubernetes/deployment.yaml
@@ -96,8 +96,21 @@ Deploy_Production:
   environment:
     name: production
     url: https://kubekat.home.sendotux.net
+    on_stop: Deploy_Production 2/2
   when: manual
   only:
   - master
+
+  
+Deploy_Production 2/2:
+  stage: promote
+  script:
+  - kubectl -n kubekat delete -f library/kubekat_ui/kubernetes/deployment.yaml
+  - kubectl -n kubekat delete -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
+  - kubectl -n kubekat delete -f library/kubekat_label_checker/kubernetes/deployment.yaml
+  when: manual
+  environment:
+    name: production
+    action: stop
 
 
