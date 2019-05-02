@@ -38,7 +38,7 @@ Deploy_Test 1/2:
   environment:
     name: test
     url: https://kubekat.home.sendotux.net
-    on_stop: Stop_Test
+    on_stop: Deploy_Test 2/2
     
 Deploy_Test 2/2:
   stage: deploy_test
