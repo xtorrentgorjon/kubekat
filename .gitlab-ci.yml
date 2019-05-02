@@ -24,7 +24,7 @@ Docker_Build:
     - docker build -t sendotux/kubekat-label-checker:latest -f kubekat_label_checker/Dockerfile . && docker push sendotux/kubekat-label-checker:latest
 
 
-Deploy_Test:
+Deploy_Test 1/2:
   stage: deploy_test
   script:
   - ls -la
@@ -40,8 +40,8 @@ Deploy_Test:
     url: https://kubekat.home.sendotux.net
     on_stop: Stop_Test
     
-Stop_Test:
-  #stage: deploy_test
+Deploy_Test 2/2:
+  stage: deploy_test
   script:
   - kubectl -n kubekat delete -f library/kubekat_ui/kubernetes/deployment.yaml
   - kubectl -n kubekat delete -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
