@@ -41,7 +41,7 @@ Deploy_Test:
     on_stop: Stop_Test
     
 Stop_Test:
-  stage: deploy_test
+  #stage: deploy_test
   script:
   - kubectl -n kubekat delete -f library/kubekat_ui/kubernetes/deployment.yaml
   - kubectl -n kubekat delete -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
