@@ -1,10 +1,8 @@
 stages:
   - build
-  - deploy
-  - test
   - deploy_test
-  - deploy_acc
-  - deploy_prod
+  - test
+  - promote
 
 
 Kubekat Docker Build:
@@ -52,7 +50,7 @@ Test about HTTPS:
 
 
 Deploy on Acceptance:
-  stage: deploy_acc
+  stage: promote
   script:
   - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
@@ -66,7 +64,7 @@ Deploy on Acceptance:
 
 
 Deploy on Production:
-  stage: deploy_prod
+  stage: promote
   script:
   - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
