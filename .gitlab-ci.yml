@@ -68,6 +68,10 @@ Test_about_HTTPS:
 Deploy_Acceptance:
   stage: promote
   script:
+  - kubectl -n kubekat apply -f library/kubekat_ui/kubernetes/deployment.yaml
+  - kubectl -n kubekat apply -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
+  - kubectl -n kubekat apply -f library/kubekat_label_checker/kubernetes/deployment.yaml
+  
   - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
@@ -82,6 +86,10 @@ Deploy_Acceptance:
 Deploy_Production:
   stage: promote
   script:
+  - kubectl -n kubekat apply -f library/kubekat_ui/kubernetes/deployment.yaml
+  - kubectl -n kubekat apply -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
+  - kubectl -n kubekat apply -f library/kubekat_label_checker/kubernetes/deployment.yaml
+  
   - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
