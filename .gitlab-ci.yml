@@ -1,17 +1,10 @@
 stages:
-  - preparation
   - build
   - deploy
   - test
   - deploy_test
   - deploy_acc
   - deploy_prod
-  
-Pre-steps:
-  stage: preparation
-  allow_failure: false
-  script:
-  - kubectl -n kubekat get pods
 
 
 Kubekat Docker Build:
@@ -32,9 +25,11 @@ Kubekat Docker Build:
     - docker build -t sendotux/kubekat-pvc-checker:latest -f kubekat_pvc_checker/Dockerfile . && docker push sendotux/kubekat-pvc-checker:latest
     - docker build -t sendotux/kubekat-label-checker:latest -f kubekat_label_checker/Dockerfile . && docker push sendotux/kubekat-label-checker:latest
 
+
 Deploy on Test:
   stage: deploy_test
   script:
+  - ls -la
   - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
@@ -55,7 +50,8 @@ Test about HTTPS:
   script:
   - curl -sSIL https://kubekat.home.sendotux.net/about
 
-Deploy on Production:
+
+Deploy on Acceptance:
   stage: deploy_acc
   script:
   - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
@@ -67,6 +63,7 @@ Deploy on Production:
   when: manual
   only:
   - master
+
 
 Deploy on Production:
   stage: deploy_prod
