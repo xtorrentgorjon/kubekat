@@ -28,11 +28,15 @@ Deploy on Test:
   stage: deploy_test
   script:
   - ls -la
+  - kubectl -n kubekat apply -f library/kubekat_ui/kubernetes/deployment.yaml
+  - kubectl -n kubekat apply -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
+  - kubectl -n kubekat apply -f library/kubekat_label_checker/kubernetes/deployment.yaml
+  
   - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   environment:
-    name: kubekat.home.sendotux.net 
+    name: test
     url: https://kubekat.home.sendotux.net
 
 Test pvc HTTPS:
