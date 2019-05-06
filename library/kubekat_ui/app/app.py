@@ -30,7 +30,7 @@ app.config.update(dict(
 ))
 
 class Filter_Form(Form):
-   name = TextField("filter")
+   filter = TextField("filter")
 
 def string_to_list(input_string):
     filter_list = input_string.split(",")
@@ -77,11 +77,32 @@ def error500():
 # Label-checker
 @app.route("/label", methods = ['GET', 'POST'])
 def label_checker_call():
-    filter = ['sla']
+    filter_list_str = 'sla'
     form = Filter_Form()
 
+    app.logger.info('Current filter is set to: <{}>'.format(form.filter.data))
 
-    response = urllib.request.urlopen('http://{}:80/api/v1/get/all'.format(os.environ['KUBEKAT_LABEL_CHECKER_SERVICE_HOST']))
+    request_url = ""
+
+    if form.filter.data:
+        filter_list_str = form.filter.data
+
+    filter_list = filter_list_str.split(",")
+
+    request_url = 'http://{}:80/api/v1/get/filter?'.format(os.environ['KUBEKAT_LABEL_CHECKER_SERVICE_HOST'])
+    request_url = request_url + filter_list[0].strip().replace(":", "=")
+    if len(filter_list) > 1:
+        for filter in filter_list[1:]:
+            request_url = request_url + "&" + filter.strip().replace(":", "=")
+
+    app.logger.info('Endpoint to be called is: < {} >'.format(request_url))
+
+    #try:
+    #    response = urllib.request.urlopen(request_url)
+    #except e:
+    #    app.logger.info('Error: < {} >'.format(e))
+    response = urllib.request.urlopen(request_url)
+    #response = urllib.request.urlopen('http://{}:80/api/v1/get/all'.format(os.environ['KUBEKAT_LABEL_CHECKER_SERVICE_HOST']))
     response_data = response.read()
     label_list = list(json.loads(response_data.decode("utf-8")))
     #return jsonify(label_list)
@@ -93,7 +114,9 @@ def label_checker_call():
     if (INGRESS_TLS):
         request_url = "https://"+request.host
 
-    return render_template('index_label_checker.html', url=request_url, version=VERSION, correct_resources=correct_resources, incorrect_resources=incorrect_resources, form=form)
+    return render_template('index_label_checker.html', url=request_url,
+        version=VERSION, correct_resources=correct_resources, incorrect_resources=incorrect_resources,
+        form=form, str_filter=filter_list_str)
 
 
 # Main

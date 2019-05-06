@@ -42,6 +42,31 @@ def string_to_list(input_string):
 def list_without_special_characters(input_list):
     return str(input_list).lstrip('[').rstrip(']').replace('"', '').replace("'","")
 
+
+@app.route("/api/v1/get/filter", methods = ['GET'])
+def api_endpoint_filter():
+    filter_list = []
+
+    for http_arg in request.args:
+        app.logger.debug('Received filter: < {} {} {} >'.format(http_arg, request.args.get(http_arg), type(request.args.get(http_arg))))
+        filter = http_arg
+        filter_value = request.args.get(http_arg)
+
+        if filter_value != "":
+            filter = filter + ":" + filter_value
+        filter_list.append(filter)
+
+    app.logger.debug('Received filter: < {} >'.format(filter_list))
+
+    lc = label_checker(app)
+    resources = lc.check_all_namespaces()
+    #app.logger.info('Detected apps: {}'.format(resources))
+    lc.filter_resource_by_label(filter_list)
+    matched_resources, unmatched_resources = lc.get_correct_resources(), lc.get_incorrect_resources()
+
+    return jsonify([{"matched":matched_resources, "unmatched":unmatched_resources}])
+
+
 # First test
 @app.route("/api/v1/get/all", methods = ['GET'])
 def api_endpoint_all():
@@ -51,7 +76,7 @@ def api_endpoint_all():
 
     lc = label_checker(app)
     resources = lc.check_all_namespaces()
-    app.logger.info('Detected apps: %s', resources)
+    app.logger.info('Detected apps: {}'.format(resources))
     lc.filter_resource_by_label(filter)
     matched_resources, unmatched_resources = lc.get_correct_resources(), lc.get_incorrect_resources()
 

@@ -31,7 +31,7 @@ Deploy_Test 1/2:
   - kubectl -n test apply -f library/kubekat_ui/kubernetes/deployment.yaml
   - kubectl -n test apply -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
   - kubectl -n test apply -f library/kubekat_label_checker/kubernetes/deployment.yaml
-  
+
   - kubectl -n test patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n test patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n test patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
@@ -39,7 +39,7 @@ Deploy_Test 1/2:
     name: test
     url: https://kubekat.home.sendotux.net
     on_stop: Deploy_Test 2/2
-    
+
 Deploy_Test 2/2:
   stage: deploy_test
   script:
@@ -65,31 +65,13 @@ Test_about_HTTPS:
   - curl -sSIL https://kubekat.home.sendotux.net/about
 
 
-Deploy_Acceptance:
-  stage: promote
-  script:
-  - kubectl -n acceptance apply -f library/kubekat_ui/kubernetes/deployment.yaml
-  - kubectl -n acceptance apply -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
-  - kubectl -n acceptance apply -f library/kubekat_label_checker/kubernetes/deployment.yaml
-  
-  - kubectl -n acceptance patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  - kubectl -n acceptance patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  - kubectl -n acceptance patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  environment:
-    name: acceptance
-    url: https://kubekat.home.sendotux.net
-  when: manual
-  only:
-  - master
-
-
 Deploy_Production 1/2:
   stage: promote
   script:
   - kubectl -n kubekat apply -f library/kubekat_ui/kubernetes/deployment.yaml
   - kubectl -n kubekat apply -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
   - kubectl -n kubekat apply -f library/kubekat_label_checker/kubernetes/deployment.yaml
-  
+
   - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
@@ -101,7 +83,7 @@ Deploy_Production 1/2:
   only:
   - master
 
-  
+
 Deploy_Production 2/2:
   stage: promote
   script:
@@ -112,5 +94,5 @@ Deploy_Production 2/2:
   environment:
     name: production
     action: stop
-
-
+  only:
+  - master
