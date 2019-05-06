@@ -9,5 +9,5 @@ COPY ./kubekat_kubernetes_api /usr/local/lib/python3.6/site-packages/kubekat_kub
 ENV FLASK_APP app.py
 
 EXPOSE 5000
-#CMD ["python", "app.py", "--debug"]
-CMD ["python", "app.py"]
+CMD ["python", "app.py", "--debug"]
+#CMD ["python", "app.py"]

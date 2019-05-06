@@ -23,7 +23,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-      <img src="{{url_for('static', filename='{{error_pic}}')}}" width="30" height="30" class="d-inline-block align-top" alt="">
+      <img src="{{url_for('static', filename='images/cat-icon.png')}}" width="30" height="30" class="d-inline-block align-top" alt="">
       <a class="navbar-brand" href="#">KubeKat {{version}}</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -59,7 +59,7 @@
             {{ form.csrf }}{{ form.hidden_tag() }}
 
             <div class="col-9 col-sm-10 col-md-11" id="form_text_input">
-                  <input autocapitalize=off type="text" class="form-control" id="name" name="name" value="{{str_filter}}">
+                  <input autocapitalize=off type="text" class="form-control" id="filter" name="filter" value="{{str_filter}}">
             </div>
 
             <div class="col-3 col-sm-2 col-md-1" id="form_button">
