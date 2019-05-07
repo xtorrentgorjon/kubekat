@@ -87,6 +87,7 @@ def label_checker_call():
     if form.filter.data:
         filter_list_str = form.filter.data
 
+    filter_list_str = filter_list_str.replace(" ", "")
     filter_list = filter_list_str.split(",")
 
     request_url = 'http://{}:80/api/v1/get/filter?'.format(os.environ['KUBEKAT_LABEL_CHECKER_SERVICE_HOST'])
@@ -97,15 +98,9 @@ def label_checker_call():
 
     app.logger.info('Endpoint to be called is: < {} >'.format(request_url))
 
-    #try:
-    #    response = urllib.request.urlopen(request_url)
-    #except e:
-    #    app.logger.info('Error: < {} >'.format(e))
     response = urllib.request.urlopen(request_url)
-    #response = urllib.request.urlopen('http://{}:80/api/v1/get/all'.format(os.environ['KUBEKAT_LABEL_CHECKER_SERVICE_HOST']))
     response_data = response.read()
     label_list = list(json.loads(response_data.decode("utf-8")))
-    #return jsonify(label_list)
 
     correct_resources=label_list[0]["matched"]
     incorrect_resources=label_list[0]["unmatched"]
