@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.extra.css') }}">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -92,7 +93,7 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  <span class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
+                  <span id={{labelkey}}_{{labelvalue}} class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
                   <span class="badge badge-pill badge-danger">None</span>
@@ -119,7 +120,7 @@
                   <td><div class="column-text-left">
                     {% if app["labels"] is mapping %}
                     {% for labelkey, labelvalue in app["labels"].items() %}
-                    <span class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
+                    <span id={{labelkey}}_{{labelvalue}} class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
                     {% endfor %}
                     {% else %}
                     <span class="badge badge-pill badge-danger">None</span>
@@ -156,7 +157,7 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  <span class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
+                  <span id={{labelkey}}_{{labelvalue}} class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
                   <span class="badge badge-pill badge-danger">None</span>
@@ -184,7 +185,7 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  <span class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
+                  <span id={{labelkey}}_{{labelvalue}} class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
                   <span class="badge badge-pill badge-danger">None</span>
@@ -203,5 +204,11 @@
   <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 </body>
+
+<script>
+$( "#badge badge-pill badge-primary" ).click(function() {
+  alert( "Handler for .click() called." );
+});
+</script>
 
 </html>
