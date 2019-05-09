@@ -92,10 +92,10 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  {{labelkey}}:{{labelvalue}}</br>
+                  <span class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
-                  [No Labels]
+                  <span class="badge badge-pill badge-danger">None</span>
                   {% endif %}</div></td>
                 <td>{{app["type"]}}</td>
               </tr>
@@ -119,10 +119,10 @@
                   <td><div class="column-text-left">
                     {% if app["labels"] is mapping %}
                     {% for labelkey, labelvalue in app["labels"].items() %}
-                    {{labelkey}}:{{labelvalue}}</br>
+                    <span class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
                     {% endfor %}
                     {% else %}
-                    [No Labels]
+                    <span class="badge badge-pill badge-danger">None</span>
                     {% endif %}</div></td>
                 </tr>
                 {% endfor %}
@@ -156,10 +156,10 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  {{labelkey}}:{{labelvalue}}</br>
+                  <span class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
-                  None
+                  <span class="badge badge-pill badge-danger">None</span>
                   {% endif %}</div></td>
                 <td>{{app["type"]}}</td>
               </tr>
@@ -184,10 +184,10 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  {{labelkey}}:{{labelvalue}}</br>
+                  <span class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
-                  None
+                  <span class="badge badge-pill badge-danger">None</span>
                   {% endif %}</div></td>
               </tr>
               {% endfor %}
