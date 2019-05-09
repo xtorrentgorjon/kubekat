@@ -203,12 +203,12 @@
   <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-</body>
+  <script>
+  $( "#badge badge-pill badge-primary" ).click(function() {
+    alert( "Handler for .click() called." );
+  });
+  </script>
 
-<script>
-$( "#badge badge-pill badge-primary" ).click(function() {
-  alert( "Handler for .click() called." );
-});
-</script>
+</body>
 
 </html>
