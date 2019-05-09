@@ -211,8 +211,13 @@
   $( ".badge.badge-pill.badge-primary" ).click(function() {
     var clicked_badge_data = $(this).text();
     var current_filter = $("#filter").val();
-    var new_filter = current_filter.replace(/\s+/g, "");
-    new_filter = new_filter+","+clicked_badge_data
+    current_filter = current_filter.replace(/\s+/g, "");
+    if (!current_filter.includes(clicked_badge_data)){
+      var new_filter = current_filter;
+      new_filter = new_filter+","+clicked_badge_data;
+      new_filter = new_filter.replace(/,,/g, ",");
+      $("#filter").val(new_filter);
+    }
 
     alert( "Handler for .click() called. Value was: " + clicked_badge_data + "\r\nNew filter is: " + new_filter);
   });
