@@ -210,7 +210,8 @@
   <script>
   $( ".badge.badge-pill.badge-primary" ).click(function() {
     var clicked_badge_data = $(this).text()
-    alert( "Handler for .click() called. Value was:" + clicked_badge_data );
+    var current_filter = $("#filter").text()
+    alert( "Handler for .click() called. Value was: " + clicked_badge_data + "</br>Current filter is: " + current_filter);
   });
   </script>
 
