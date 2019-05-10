@@ -244,7 +244,7 @@
     $.each(filter_list, function(ind, obj){
       var filter_name = obj.replace(":","_");
       console.log(filter_name);
-      $('.badge.badge-pill.badge-primary.'+filter_name).each(function(index, object){
+      $('.badge.badge-pill.badge-secondary.'+filter_name).each(function(index, object){
            $(object).removeClass("badge-secondary")
            $(object).addClass("badge-primary")
            console.log(object);
