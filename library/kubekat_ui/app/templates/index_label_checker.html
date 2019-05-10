@@ -226,7 +226,7 @@
     var current_filter = $("#filter").val();
     current_filter = current_filter.replace(/\s+/g, "");
     var filter_list = current_filter.split(",")
-    filter_list.each(function(ind, obj){
+    $.each(filter_list, function(ind, obj){
       var filter_name = obj.replace(":","_");
       console.log(filter_name);
       $('.badge.badge-pill.badge-primary.'+filter_name).each(function(index, object){
