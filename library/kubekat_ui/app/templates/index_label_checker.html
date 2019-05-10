@@ -215,6 +215,7 @@
     var new_filter = current_filter;
     if (current_filter.includes(clicked_badge_data)) {
       new_filter = new_filter.replace(clicked_badge_data, "");
+      new_filter = new_filter.replace(/[,\s]*$/g, "");
     }else{
       if (current_filter != ""){
         new_filter = new_filter+", "
