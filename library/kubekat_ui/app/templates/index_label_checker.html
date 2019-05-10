@@ -218,7 +218,10 @@
     }else{
       new_filter = new_filter+","+clicked_badge_data;
     }
-    selection_class = $(this).attr("class");
+    var selection_class = $(this).attr("class");
+    console.log(selection_class);
+    selection_class = selection_class.replace(/\s+/g, ".");
+    selection_class = "."+selection_class
     console.log(selection_class);
     $(selection_class).each(function(index, object){
          $(object).toggleClass("badge-primary")
