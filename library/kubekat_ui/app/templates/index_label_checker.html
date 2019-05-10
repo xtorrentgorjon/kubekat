@@ -223,17 +223,12 @@
   });
 
   $(document).ready(function() {
-    //var current_filter = $("#filter").val();
-    //alert( "Handler for .click() called. Value was: " + clicked_badge_data + "\r\nNew filter is: " + new_filter);
-
-    //var x = document.getElementsByClassName(".badge.badge-pill.badge-primary.sla_low");
-    var x = document.querySelectorAll(".badge,.badge-pill,.badge-primary,.sla_low");
-    var i;
-    for (i = 0; i < x.length; i++) {
-      x[i].removeClass("badge-primary")
-      x[i].addClass("badge-secondary")
-    }
-    alert( x.length );
+  $('.badge,.badge-pill,.badge-primary,.sla_low').each(function(index, object){
+       //do your shit a cada element
+       object.removeClass("badge-primary")
+       object.addClass("badge-secondary")
+       console.log(object); //mira la consola
+     });
   });
   </script>
 
