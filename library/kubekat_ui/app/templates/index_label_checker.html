@@ -20,7 +20,7 @@
 </head>
 
 <style>
-  .badge.badge-pill.badge-primary {cursor: pointer;}
+  .badge.badge-pill {cursor: pointer;}
 </style>
 
 <body>
@@ -97,7 +97,7 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  <span id={{labelkey}}_{{labelvalue}} class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
+                  <span class="badge badge-pill badge-secondary {{labelkey}}_{{labelvalue}}">{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
                   <span class="badge badge-pill badge-danger">None</span>
@@ -124,7 +124,7 @@
                   <td><div class="column-text-left">
                     {% if app["labels"] is mapping %}
                     {% for labelkey, labelvalue in app["labels"].items() %}
-                    <span id={{labelkey}}_{{labelvalue}} class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
+                    <span class="badge badge-pill badge-secondary {{labelkey}}_{{labelvalue}}">{{labelkey}}:{{labelvalue}}</span></br>
                     {% endfor %}
                     {% else %}
                     <span class="badge badge-pill badge-danger">None</span>
@@ -161,7 +161,7 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  <span id={{labelkey}}_{{labelvalue}} class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
+                  <span class="badge badge-pill badge-secondary {{labelkey}}_{{labelvalue}}">{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
                   <span class="badge badge-pill badge-danger">None</span>
@@ -189,7 +189,7 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  <span id={{labelkey}}_{{labelvalue}} class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
+                  <span class="badge badge-pill badge-secondary {{labelkey}}_{{labelvalue}}">{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
                   <span class="badge badge-pill badge-danger">None</span>
@@ -208,19 +208,50 @@
   <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
   <script>
-  $( ".badge.badge-pill.badge-primary" ).click(function() {
+  $( ".badge.badge-pill" ).click(function() {
     var clicked_badge_data = $(this).text();
     var current_filter = $("#filter").val();
     current_filter = current_filter.replace(/\s+/g, "");
     var new_filter = current_filter;
     if (current_filter.includes(clicked_badge_data)) {
       new_filter = new_filter.replace(clicked_badge_data, "");
+      new_filter = new_filter.replace(/[,\s]*$/g, "");
     }else{
-      new_filter = new_filter+","+clicked_badge_data;
-      new_filter = new_filter.replace(/,+/g, ", ");
+      if (current_filter != ""){
+        new_filter = new_filter+", "
+      }
+      new_filter = new_filter+clicked_badge_data;
     }
+    var selection_class = $(this).attr("class");
+    console.log(selection_class);
+    selection_class = selection_class.replace(/\s+/g, ".");
+    selection_class = "."+selection_class
+    console.log(selection_class);
+    $(selection_class).each(function(index, object){
+         $(object).toggleClass("badge-primary")
+         $(object).toggleClass("badge-secondary")
+         console.log(object);
+    });
+
+    new_filter = new_filter.replace(/,+/g, ", ");
     $("#filter").val(new_filter);
-    //alert( "Handler for .click() called. Value was: " + clicked_badge_data + "\r\nNew filter is: " + new_filter);
+  });
+
+  $(document).ready(function() {
+    var current_filter = $("#filter").val();
+    current_filter = current_filter.replace(/\s+/g, "");
+    if (current_filter != "") {
+      var filter_list = current_filter.split(",")
+      $.each(filter_list, function(ind, obj){
+        var filter_name = obj.replace(":","_");
+        console.log(filter_name);
+        $('.badge.badge-pill.badge-secondary.'+filter_name).each(function(index, object){
+             $(object).removeClass("badge-secondary")
+             $(object).addClass("badge-primary")
+             console.log(object);
+           });
+      });
+    }
   });
   </script>
 
