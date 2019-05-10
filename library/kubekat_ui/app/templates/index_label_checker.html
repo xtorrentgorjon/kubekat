@@ -225,13 +225,14 @@
   $(document).ready(function() {
     //var current_filter = $("#filter").val();
     //alert( "Handler for .click() called. Value was: " + clicked_badge_data + "\r\nNew filter is: " + new_filter);
-    //alert( "Current filter is: " + current_filter);
+
     var x = document.getElementsByClassName(".badge.badge-pill.badge-primary.sla_low");
     var i;
     for (i = 0; i < x.length; i++) {
       x[i].removeClass("badge-primary")
       x[i].addClass("badge-secondary")
     }
+    alert( x.length );
   });
   </script>
 
