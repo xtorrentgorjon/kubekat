@@ -208,7 +208,7 @@
   <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
   <script>
-  $( ".badge.badge-pill.badge-primary" ).click(function() {
+  $( ".badge.badge-pill" ).click(function() {
     var clicked_badge_data = $(this).text();
     var current_filter = $("#filter").val();
     current_filter = current_filter.replace(/\s+/g, "");
@@ -223,12 +223,18 @@
   });
 
   $(document).ready(function() {
-  $('.badge.badge-pill.badge-primary.sla_low').each(function(index, object){
-       //do your shit a cada element
-       $(object).removeClass("badge-primary")
-       $(object).addClass("badge-secondary")
-       console.log(object); //mira la consola
-     });
+    var current_filter = $("#filter").val();
+    current_filter = current_filter.replace(/\s+/g, "");
+    var filter_list = current_filter.split(",")
+    filter_list.each(function(ind, obj){
+      var filter_name = obj.replace(":","_");
+      console.log(filter_name);
+      $('.badge.badge-pill.badge-primary.'+filter_name).each(function(index, object){
+           $(object).removeClass("badge-primary")
+           $(object).addClass("badge-secondary")
+           console.log(object);
+         });
+    });
   });
   </script>
 
