@@ -218,6 +218,7 @@
     }else{
       new_filter = new_filter+","+clicked_badge_data;
     }
+    var filter_name = clicked_badge_data.replace(":","_");
     $('.badge.badge-pill.badge-primary.'+clicked_badge_data).each(function(index, object){
          $(object).toggleClass("badge-primary")
          $(object).toggleClass("badge-secondary")
