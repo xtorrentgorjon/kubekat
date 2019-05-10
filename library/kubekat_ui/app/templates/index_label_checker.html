@@ -20,7 +20,7 @@
 </head>
 
 <style>
-  .badge.badge-pill.badge-primary {cursor: pointer;}
+  .badge.badge-pill {cursor: pointer;}
 </style>
 
 <body>
@@ -215,21 +215,14 @@
     var new_filter = current_filter;
     if (current_filter.includes(clicked_badge_data)) {
       new_filter = new_filter.replace(clicked_badge_data, "");
-
-      $('.badge.badge-pill.badge-primary.'+clicked_badge_data).each(function(index, object){
-           $(object).removeClass("badge-primary")
-           $(object).addClass("badge-secondary")
-           console.log(object);
-      });
     }else{
       new_filter = new_filter+","+clicked_badge_data;
-
-      $('.badge.badge-pill.badge-primary.'+clicked_badge_data).each(function(index, object){
-           $(object).removeClass("badge-secondary")
-           $(object).addClass("badge-primary")
-           console.log(object);
-      });
     }
+    $('.badge.badge-pill.badge-primary.'+clicked_badge_data).each(function(index, object){
+         $(object).toggleClass("badge-primary")
+         $(object).toggleClass("badge-secondary")
+         console.log(object);
+    });
 
     new_filter = new_filter.replace(/,+/g, ", ");
     $("#filter").val(new_filter);
