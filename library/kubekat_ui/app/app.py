@@ -77,7 +77,7 @@ def error500():
 # Label-checker
 @app.route("/label", methods = ['GET', 'POST'])
 def label_checker_call():
-    filter_list_str = 'sla'
+    filter_list_str = ''
     form = Filter_Form()
 
     app.logger.info('Current filter is set to: <{}>'.format(form.filter.data))
