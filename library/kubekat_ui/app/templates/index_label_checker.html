@@ -97,7 +97,7 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  <span class="badge badge-pill badge-primary "{{labelkey}}_{{labelvalue}}>{{labelkey}}:{{labelvalue}}</span></br>
+                  <span class="badge badge-pill badge-primary {{labelkey}}_{{labelvalue}}">{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
                   <span class="badge badge-pill badge-danger">None</span>
@@ -124,7 +124,7 @@
                   <td><div class="column-text-left">
                     {% if app["labels"] is mapping %}
                     {% for labelkey, labelvalue in app["labels"].items() %}
-                    <span class="badge badge-pill badge-primary "{{labelkey}}_{{labelvalue}}>{{labelkey}}:{{labelvalue}}</span></br>
+                    <span class="badge badge-pill badge-primary {{labelkey}}_{{labelvalue}}">{{labelkey}}:{{labelvalue}}</span></br>
                     {% endfor %}
                     {% else %}
                     <span class="badge badge-pill badge-danger">None</span>
@@ -161,7 +161,7 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  <span class="badge badge-pill badge-primary "{{labelkey}}_{{labelvalue}}>{{labelkey}}:{{labelvalue}}</span></br>
+                  <span class="badge badge-pill badge-primary {{labelkey}}_{{labelvalue}}">{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
                   <span class="badge badge-pill badge-danger">None</span>
@@ -189,7 +189,7 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  <span class="badge badge-pill badge-primary "{{labelkey}}_{{labelvalue}}>{{labelkey}}:{{labelvalue}}</span></br>
+                  <span class="badge badge-pill badge-primary {{labelkey}}_{{labelvalue}}">{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
                   <span class="badge badge-pill badge-danger">None</span>
