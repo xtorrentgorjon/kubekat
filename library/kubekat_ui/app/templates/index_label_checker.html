@@ -240,16 +240,18 @@
   $(document).ready(function() {
     var current_filter = $("#filter").val();
     current_filter = current_filter.replace(/\s+/g, "");
-    var filter_list = current_filter.split(",")
-    $.each(filter_list, function(ind, obj){
-      var filter_name = obj.replace(":","_");
-      console.log(filter_name);
-      $('.badge.badge-pill.badge-secondary.'+filter_name).each(function(index, object){
-           $(object).removeClass("badge-secondary")
-           $(object).addClass("badge-primary")
-           console.log(object);
-         });
-    });
+    if (current_filter != "") {
+      var filter_list = current_filter.split(",")
+      $.each(filter_list, function(ind, obj){
+        var filter_name = obj.replace(":","_");
+        console.log(filter_name);
+        $('.badge.badge-pill.badge-secondary.'+filter_name).each(function(index, object){
+             $(object).removeClass("badge-secondary")
+             $(object).addClass("badge-primary")
+             console.log(object);
+           });
+      });
+    }
   });
   </script>
 
