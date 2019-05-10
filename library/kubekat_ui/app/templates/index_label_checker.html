@@ -225,8 +225,8 @@
   $(document).ready(function() {
   $('.badge,.badge-pill,.badge-primary,.sla_low').each(function(index, object){
        //do your shit a cada element
-       object.removeClass("badge-primary")
-       object.addClass("badge-secondary")
+       $(object).removeClass("badge-primary")
+       $(object).addClass("badge-secondary")
        console.log(object); //mira la consola
      });
   });
