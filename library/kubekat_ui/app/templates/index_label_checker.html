@@ -97,7 +97,7 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  <span id={{labelkey}}_{{labelvalue}} class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
+                  <span class="badge badge-pill badge-primary "{{labelkey}}_{{labelvalue}}>{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
                   <span class="badge badge-pill badge-danger">None</span>
@@ -124,7 +124,7 @@
                   <td><div class="column-text-left">
                     {% if app["labels"] is mapping %}
                     {% for labelkey, labelvalue in app["labels"].items() %}
-                    <span id={{labelkey}}_{{labelvalue}} class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
+                    <span class="badge badge-pill badge-primary "{{labelkey}}_{{labelvalue}}>{{labelkey}}:{{labelvalue}}</span></br>
                     {% endfor %}
                     {% else %}
                     <span class="badge badge-pill badge-danger">None</span>
@@ -161,7 +161,7 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  <span id={{labelkey}}_{{labelvalue}} class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
+                  <span class="badge badge-pill badge-primary "{{labelkey}}_{{labelvalue}}>{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
                   <span class="badge badge-pill badge-danger">None</span>
@@ -189,7 +189,7 @@
                 <td><div class="column-text-left">
                   {% if app["labels"] is mapping %}
                   {% for labelkey, labelvalue in app["labels"].items() %}
-                  <span id={{labelkey}}_{{labelvalue}} class="badge badge-pill badge-primary">{{labelkey}}:{{labelvalue}}</span></br>
+                  <span class="badge badge-pill badge-primary "{{labelkey}}_{{labelvalue}}>{{labelkey}}:{{labelvalue}}</span></br>
                   {% endfor %}
                   {% else %}
                   <span class="badge badge-pill badge-danger">None</span>
@@ -217,10 +217,15 @@
       new_filter = new_filter.replace(clicked_badge_data, "");
     }else{
       new_filter = new_filter+","+clicked_badge_data;
-      new_filter = new_filter.replace(/,+/g, ", ");
     }
+    new_filter = new_filter.replace(/,+/g, ", ");
     $("#filter").val(new_filter);
+  });
+
+  $(document).ready(function() {
+    var current_filter = $("#filter").val();
     //alert( "Handler for .click() called. Value was: " + clicked_badge_data + "\r\nNew filter is: " + new_filter);
+    alert( "Current filter is: " + current_filter);
   });
   </script>
 
