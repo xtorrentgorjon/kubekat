@@ -54,13 +54,13 @@ Deploy_Test 2/2:
 UnitTest_app:
   stage: test
   script:
-  - python3 library/kubekat_ui/app/test_app.py
+  - python3 library/kubekat_ui/app/test_app.py -v
   when: delayed
   start_in: 10 seconds
 UnitTest_http_return_code:
   stage: test
   script:
-  - python3 library/kubekat_ui/app/test_http.py
+  - python3 library/kubekat_ui/app/test_http.py -v
   when: delayed
   start_in: 10 seconds
 
