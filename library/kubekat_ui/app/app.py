@@ -32,18 +32,6 @@ app.config.update(dict(
 class Filter_Form(Form):
    filter = TextField("filter")
 
-def string_to_list(input_string):
-    filter_list = input_string.split(",")
-    filter_list = [x.strip() for x in filter_list]
-    filter_list = [x.replace(" ", "")  for x in filter_list]
-    filter_list = [x for x in filter_list if x is not ""]
-    return filter_list
-
-def list_without_special_characters(input_list):
-    return str(input_list).lstrip('[').rstrip(']').replace('"', '').replace("'","")
-
-
-
 # This function prevents Flask from telling the browser to cache images indefinitely
 @app.after_request
 def add_header(response):
