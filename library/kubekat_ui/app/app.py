@@ -32,16 +32,6 @@ app.config.update(dict(
 class Filter_Form(Form):
    filter = TextField("filter")
 
-def string_to_list(input_string):
-    filter_list = input_string.split(",")
-    filter_list = [x.strip() for x in filter_list]
-    return filter_list
-
-def list_without_special_characters(input_list):
-    return str(input_list).lstrip('[').rstrip(']').replace('"', '').replace("'","")
-
-
-
 # This function prevents Flask from telling the browser to cache images indefinitely
 @app.after_request
 def add_header(response):
@@ -130,7 +120,7 @@ def pvc_checker_call():
     return render_template('index_pvc_checker.html', url=request_url, version=VERSION, pvc_list=pvc_list)
 
 
-@app.route("/about.html", methods = ['GET'])
+@app.route("/about", methods = ['GET'])
 def aboutpage():
     return render_template('about.html')
 
