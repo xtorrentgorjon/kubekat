@@ -35,6 +35,8 @@ class Filter_Form(Form):
 def string_to_list(input_string):
     filter_list = input_string.split(",")
     filter_list = [x.strip() for x in filter_list]
+    filter_list = [x.replace(" ", "")  for x in filter_list]
+    filter_list = [x for x in filter_list if x is not ""]
     return filter_list
 
 def list_without_special_characters(input_list):
