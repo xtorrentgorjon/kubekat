@@ -51,18 +51,18 @@ Deploy_Test 2/2:
     name: test
     action: stop
 
-Test_pvc_HTTPS:
+UnitTest_app:
   stage: test
   script:
-  - curl -sSIL https://kubekat.home.sendotux.net/pvc
-Test_label_HTTPS:
+  - python3 library/kubekat_ui/app/test_app.py
+  when: delayed
+  start_in: 10 seconds
+UnitTest_http_return_code:
   stage: test
   script:
-  - curl -sSIL https://kubekat.home.sendotux.net/label
-Test_about_HTTPS:
-  stage: test
-  script:
-  - curl -sSIL https://kubekat.home.sendotux.net/about
+  - python3 library/kubekat_ui/app/test_http.py
+  when: delayed
+  start_in: 10 seconds
 
 
 Deploy_Production 1/2:

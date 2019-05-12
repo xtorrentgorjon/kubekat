@@ -132,7 +132,7 @@ def pvc_checker_call():
     return render_template('index_pvc_checker.html', url=request_url, version=VERSION, pvc_list=pvc_list)
 
 
-@app.route("/about.html", methods = ['GET'])
+@app.route("/about", methods = ['GET'])
 def aboutpage():
     return render_template('about.html')
 
