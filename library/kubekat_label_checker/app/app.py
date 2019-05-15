@@ -64,6 +64,8 @@ def api_endpoint_filter():
     lc.filter_resource_by_label(filter_list)
     matched_resources, unmatched_resources = lc.get_correct_resources(), lc.get_incorrect_resources()
 
+    app.logger.debug('Returning response lengths: < Match: {} Unmatch: {} >'.format(len(matched_resources), len(unmatched_resources)))
+
     return jsonify([{"matched":matched_resources, "unmatched":unmatched_resources}])
 
 

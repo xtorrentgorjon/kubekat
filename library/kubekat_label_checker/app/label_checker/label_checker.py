@@ -1,4 +1,5 @@
 from kubernetes import client, config, watch
+from hashlib import sha1
 
 class kubernetes_query():
     def __init__(self):
@@ -42,10 +43,14 @@ class label_checker():
         else:
             for resource in self.__resource_list:
                 filtered = False
+                labels = []
                 if resource["metadata"].labels == None: # If resource has no labels, automatically classify it as invalid.
+                    labels = [{"id": None, "key": None, "value": None}]
                     filtered = True
                 else:
-                    self.__app.logger.debug('Checking resource %s', resource)
+                    labels = [{"id":str(sha1((str(labelkey)+str(labelvalue)).encode('utf-8')).hexdigest()), "key":labelkey, "value": labelvalue} for labelkey, labelvalue in resource["metadata"].labels.items()]
+                    for i in labels:
+                        self.__app.logger.debug('Element {}, Label element < {} >'.format(resource["metadata"].name, (i["id"], i["key"], i["value"])))
                     for filter in exist_filter:
                         if ":" in filter: # If : exists, must check full key:value pair.
                             filter = filter.split(":")
@@ -60,10 +65,12 @@ class label_checker():
                         else: # Check only that label exists.
                             if filter not in resource["metadata"].labels:
                                 filtered = True
+
+
                 resource = {
                     'namespace':resource["metadata"].namespace,
                     'name':resource["metadata"].name,
-                    'labels':resource["metadata"].labels,
+                    'labels':labels,
                     'type':resource["type"],
                 }
                 if filtered:
