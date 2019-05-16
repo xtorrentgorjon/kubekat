@@ -1,30 +1,12 @@
 from kubernetes import client, config, watch
+from kubekat_kubernetes_api.kubekat_kubernetes_api import kubernetes_query
 from hashlib import sha1
-
-class kubernetes_query():
-    def __init__(self):
-        self.__config = config.load_incluster_config()
-
-    def list_deployments_in_namespace(self, namespace):
-        api = client.AppsV1Api()
-        output = api.list_namespaced_deployment(namespace)
-        return [deployment.metadata for deployment in output.items]
-
-    def list_statefulsets_in_namespace(self, namespace):
-        api = client.AppsV1Api()
-        output = api.list_namespaced_stateful_set(namespace)
-        return [statefulset.metadata for statefulset in output.items]
-
-    def list_namespaces(self):
-        api = client.CoreV1Api()
-        output = api.list_namespace()
-        return [namespace.metadata.name for namespace in output.items]
 
 
 class label_checker():
     def __init__(self, app):
         self.__app = app
-        self.__kubernetes_query = kubernetes_query()
+        self.__kubernetes_query = kubernetes_query(self.__app)
         self.__resource_list = []
         self.__resource_correct_labels = []
         self.__resource_incorrect_labels = []

@@ -21,6 +21,17 @@ class kubernetes_query():
         output = api.list_namespaced_persistent_volume_claim(namespace)
         return [pvc.metadata for pvc in output.items]
 
+    def list_role_binding_in_namespace(self, namespace):
+        api = client.RbacAuthorizationV1Api()
+        output = api.list_namespaced_role_binding(namespace)
+        #return [rb.metadata for rb in output.items]
+        return [{"name": rb.metadata.name,
+                "namespace": rb.metadata.namespace,
+                "role_name": rb.role_ref.name,
+                "role_type": rb.role_ref.kind,
+                "subjects": [{"kind":element.kind, "name":element.name} for element in rb.subjects]
+                } for rb in output.items]
+
     def list_pods_in_namespace(self, namespace):
         api = client.CoreV1Api()
         output = api.list_namespaced_pod(namespace)
