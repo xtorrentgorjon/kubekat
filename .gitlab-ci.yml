@@ -22,6 +22,7 @@ Docker_Build:
     - docker build -t sendotux/kubekat-ui:latest -f kubekat_ui/Dockerfile . && docker push sendotux/kubekat-ui:latest
     - docker build -t sendotux/kubekat-pvc-checker:latest -f kubekat_pvc_checker/Dockerfile . && docker push sendotux/kubekat-pvc-checker:latest
     - docker build -t sendotux/kubekat-label-checker:latest -f kubekat_label_checker/Dockerfile . && docker push sendotux/kubekat-label-checker:latest
+    - docker build -t sendotux/kubekat-rbac-checker:latest -f kubekat_rbac_checker/Dockerfile . && docker push sendotux/kubekat-rbac-checker:latest
 
 
 Deploy_Test 1/2:
@@ -31,10 +32,12 @@ Deploy_Test 1/2:
   - kubectl -n test apply -f library/kubekat_ui/kubernetes/deployment.yaml
   - kubectl -n test apply -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
   - kubectl -n test apply -f library/kubekat_label_checker/kubernetes/deployment.yaml
+  - kubectl -n test apply -f library/kubekat_rbac_checker/kubernetes/deployment.yaml
 
   - kubectl -n test patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n test patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n test patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl -n test patch deployment kubekat-rbac-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   environment:
     name: test
     url: https://kubekat.home.sendotux.net
@@ -46,6 +49,7 @@ Deploy_Test 2/2:
   - kubectl -n test delete -f library/kubekat_ui/kubernetes/deployment.yaml
   - kubectl -n test delete -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
   - kubectl -n test delete -f library/kubekat_label_checker/kubernetes/deployment.yaml
+  - kubectl -n test delete -f library/kubekat_rbac_checker/kubernetes/deployment.yaml
   when: manual
   environment:
     name: test
@@ -71,10 +75,12 @@ Deploy_Production 1/2:
   - kubectl -n kubekat apply -f library/kubekat_ui/kubernetes/deployment.yaml
   - kubectl -n kubekat apply -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
   - kubectl -n kubekat apply -f library/kubekat_label_checker/kubernetes/deployment.yaml
+  - kubectl -n kubekat apply -f library/kubekat_rbac_checker/kubernetes/deployment.yaml
 
   - kubectl -n kubekat patch deployment kubekat-ui -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-pvc-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl -n kubekat patch deployment kubekat-label-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl -n kubekat patch deployment kubekat-rbac-checker -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   environment:
     name: production
     url: https://kubekat.home.sendotux.net
@@ -90,6 +96,7 @@ Deploy_Production 2/2:
   - kubectl -n kubekat delete -f library/kubekat_ui/kubernetes/deployment.yaml
   - kubectl -n kubekat delete -f library/kubekat_pvc_checker/kubernetes/deployment.yaml
   - kubectl -n kubekat delete -f library/kubekat_label_checker/kubernetes/deployment.yaml
+  - kubectl -n kubekat delete -f library/kubekat_rbac_checker/kubernetes/deployment.yaml
   when: manual
   environment:
     name: production

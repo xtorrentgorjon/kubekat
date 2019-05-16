@@ -64,7 +64,7 @@ def error500():
 
 
 
-# Label-checker
+# Label-Checker
 @app.route("/label", methods = ['GET', 'POST'])
 def label_checker_call():
     filter_list_str = ''
@@ -104,7 +104,7 @@ def label_checker_call():
         form=form, str_filter=filter_list_str)
 
 
-# Main
+# PVC-Checker
 @app.route("/pvc", methods = ['GET'])
 def pvc_checker_call():
     response = urllib.request.urlopen('http://{}:80/api/v1/get/all'.format(os.environ['KUBEKAT_PVC_CHECKER_SERVICE_HOST']))
@@ -118,6 +118,22 @@ def pvc_checker_call():
         request_url = "https://"+request.host
 
     return render_template('index_pvc_checker.html', url=request_url, version=VERSION, pvc_list=pvc_list)
+
+# RBAC-Checker
+@app.route("/rbac", methods = ['GET'])
+def rbac_checker_call():
+    response = urllib.request.urlopen('http://{}:80/api/v1/get/all'.format(os.environ['KUBEKAT_RBAC_CHECKER_SERVICE_HOST']))
+    response_data = response.read()
+
+    rbac_list = list(json.loads(response_data.decode("utf-8")))
+    app.logger.info('Received rbac list: %s', rbac_list)
+
+    request_url = "http://"+request.host
+    if (INGRESS_TLS):
+        request_url = "https://"+request.host
+
+    return render_template('index_rbac_checker.html', url=request_url,
+        version=VERSION, resources=rbac_list)
 
 
 @app.route("/about", methods = ['GET'])

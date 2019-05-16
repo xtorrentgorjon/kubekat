@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubekat-rbac-checker
+  labels:
+    app: kubekat-rbac-checker
+    sla: low
+    maintainer: "xtorrent"
+    team: SRE
+spec:
+  selector:
+    matchLabels:
+      app: kubekat-rbac-checker
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kubekat-rbac-checker
+    spec:
+      serviceAccountName: kubekat-rbac-checker
+      containers:
+      - name: kubekat-rbac-checker
+        image: sendotux/kubekat-rbac-checker:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: kubekat-rbac-checker-configmap
