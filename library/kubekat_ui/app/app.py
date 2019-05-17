@@ -136,8 +136,14 @@ def rbac_checker_call():
         version=VERSION, resources=rbac_list)
 
 
+# Home page
+@app.route("/", methods = ['GET'])
+def home_call():
+    return render_template('index.html', version=VERSION)
+
+# About page
 @app.route("/about", methods = ['GET'])
-def aboutpage():
+def aboutpage_call():
     return render_template('about.html')
 
 

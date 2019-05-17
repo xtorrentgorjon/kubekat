@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>KubeKat - Kubernetes Checker Tool {{version}}</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon_cat.ico') }}">
+
+  <!-- Bootstrap core CSS -->
+  <!--<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.extra.css') }}">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <img src="{{url_for('static', filename='images/cat-icon.png')}}" width="30" height="30" class="d-inline-block align-top" alt="">
+      <a class="navbar-brand" href="#">KubeKat {{version}}</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <div class="container"> <!-- Matches should go here  -->
+    <div class="row">
+      <div class="col-4">
+        <div class="card h-100 text-center">
+          <img src="{{url_for('static', filename='images/home_sjaak.jpg')}}" class="rounded-circle mx-auto d-block" style="margin-top: 1em;" width="50%" height= "50%" alt="">
+          <div class="card-body">
+            <a href="label">
+              <h5 class="card-title">Label Checker</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Check for object labels</h6>
+            </a>
+              <p class="card-text">The original application of Kubekat.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="card h-100 text-center">
+          <img src="{{url_for('static', filename='images/home_hazel.jpg')}}" class="rounded-circle mx-auto d-block" style="margin-top: 1em;" width="50%" height= "50%" alt="">
+          <div class="card-body">
+            <a href="pvc">
+              <h5 class="card-title">PVC Checker</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Check for PVC status</h6>
+            </a>
+              <p class="card-text">Kubekat tooling for PVC status. Supports at least rook storage metrics.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="card h-100 text-center">
+          <img src="{{url_for('static', filename='images/home_ollie.jpg')}}" class="rounded-circle mx-auto d-block" style="margin-top: 1em;" width="50%" height= "50%" alt="">
+          <div class="card-body">
+            <a href="rbac">
+              <h5 class="card-title">RBAC Checker</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Check Current RBAC rules</h6>
+            </a>
+              <p class="card-text">Latest addition to Kubekat. Check the RBAC definitions in each namespace.</p>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+
+</body>
+
+</html>
