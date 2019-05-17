@@ -16,6 +16,46 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.extra.css') }}">
 
+  <style>
+  .catpic:hover {
+    -webkit-animation-name: rotate;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: rotate;
+    -moz-animation-duration: 2s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    animation-name: rotate;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+  @-webkit-keyframes rotate {
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);}
+  }
+
+  @-moz-keyframes rotate {
+      from {-moz-transform: rotate(0deg);}
+      to {-moz-transform: rotate(360deg);}
+  }
+
+  @keyframes rotate {
+      from {transform: rotate(0deg);}
+      to {transform: rotate(360deg);}
+  }
+
+  .catimgcontainer {
+    margin-top: 1em;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+  </style>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 </head>
 
@@ -44,37 +84,61 @@
     <div class="row">
       <div class="col-4">
         <div class="card h-100 text-center">
-          <img src="{{url_for('static', filename='images/home_sjaak.jpg')}}" class="rounded-circle mx-auto d-block" style="margin-top: 1em;" width="50%" height= "50%" alt="">
+          <div class=catimgcontainer>
+            <div class=catimgcontainerinner>
+              <img src="{{url_for('static', filename='images/home_sjaak_scaled.jpg')}}" class="rounded-circle mx-auto d-block img-thumbnail catpic" alt="">
+            </div>
+          </div>
           <div class="card-body">
             <a href="label">
               <h5 class="card-title">Label Checker</h5>
               <h6 class="card-subtitle mb-2 text-muted">Check for object labels</h6>
             </a>
-              <p class="card-text">The original application of Kubekat.</p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">The original Kubekat application</li>
+              <li class="list-group-item">Filter elements based on their labels</li>
+              <li class="list-group-item">Supports deployments and statefulsets</li>
+            </ul>
           </div>
         </div>
       </div>
       <div class="col-4">
         <div class="card h-100 text-center">
-          <img src="{{url_for('static', filename='images/home_hazel.jpg')}}" class="rounded-circle mx-auto d-block" style="margin-top: 1em;" width="50%" height= "50%" alt="">
+          <div class=catimgcontainer>
+            <div class=catimgcontainerinner>
+              <img src="{{url_for('static', filename='images/home_hazel_scaled.jpg')}}" class="rounded-circle mx-auto d-block img-thumbnail catpic" alt="">
+            </div>
+          </div>
           <div class="card-body">
             <a href="pvc">
               <h5 class="card-title">PVC Checker</h5>
               <h6 class="card-subtitle mb-2 text-muted">Check for PVC status</h6>
             </a>
-              <p class="card-text">Kubekat tooling for PVC status. Supports at least rook storage metrics.</p>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Kubekat tooling for PVC status</li>
+                <li class="list-group-item">Supports at least rook storage metrics</li>
+                <li class="list-group-item">Requires pod exec privileges</li>
+              </ul>
           </div>
         </div>
       </div>
       <div class="col-4">
         <div class="card h-100 text-center">
-          <img src="{{url_for('static', filename='images/home_ollie.jpg')}}" class="rounded-circle mx-auto d-block" style="margin-top: 1em;" width="50%" height= "50%" alt="">
+          <div class=catimgcontainer>
+            <div class=catimgcontainerinner>
+              <img src="{{url_for('static', filename='images/home_ollie_scaled.jpg')}}" class="rounded-circle mx-auto d-block img-thumbnail catpic" alt="">
+            </div>
+          </div>
           <div class="card-body">
             <a href="rbac">
               <h5 class="card-title">RBAC Checker</h5>
               <h6 class="card-subtitle mb-2 text-muted">Check Current RBAC rules</h6>
             </a>
-              <p class="card-text">Latest addition to Kubekat. Check the RBAC definitions in each namespace.</p>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Latest addition to Kubekat</li>
+                <li class="list-group-item">Check the RBAC definitions</li>
+                <li class="list-group-item">New features coming soon</li>
+              </ul>
           </div>
         </div>
       </div>
