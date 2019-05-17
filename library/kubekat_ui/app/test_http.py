@@ -8,7 +8,7 @@ class TestHTTPReturnCode(unittest.TestCase):
         self.pages_200 = ["https://kubekat-test.home.sendotux.net/label",
             "https://kubekat-test.home.sendotux.net/pvc",
             "https://kubekat-test.home.sendotux.net/about"]
-        self.pages_400 = ["https://kubekat-test.home.sendotux.net"]
+        self.pages_400 = [] # ["https://kubekat-test.home.sendotux.net"]
         self.pages_500 = ["https://kubekat-test.home.sendotux.net/error-http-500-test"]
 
     def test_http_200(self):
