@@ -61,16 +61,18 @@
     </div>
   </div>
 
+  <div class="container">
   {% if resources|length > 0 %}
     <div class="row">
+    <h2>Found RBAC configuration</h2>
     {% for namespace in namespaces %}
     <div class="col-12">
     <div class="card">
-      <h2 class="card-header">{{namespace}}</h5>
+      <h4 class="card-header">{{namespace}}</h5>
       <div class="card-body">
         {% for rolebinding in resources %}
         {% if rolebinding["namespace"] == namespace %}
-          <h3 class="card-title">{{rolebinding["name"]}}</h5>
+          <h4 class="card-title">{{rolebinding["name"]}}</h5>
           <div class="row">
           {% for user in rolebinding["subjects"] %}
           <div class="col-4 text-center lessmargin">
@@ -91,6 +93,7 @@
     {% endfor %}
     </div>
   {% endif %}
+  </div>
 
 
 
