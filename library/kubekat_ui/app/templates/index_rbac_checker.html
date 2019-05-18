@@ -62,65 +62,36 @@
   </div>
 
   {% if resources|length > 0 %}
-  <div class="container"> <!-- Matches should go here  -->
     <div class="row">
-      <div class="col text-left">
-        <h2>List of Rolebindings</h2>
-        <table class="table table-striped">
-            <thead>
-              <tr>
-                <th class="d-none d-sm-block">Namespace</th>
-                <th>Resource Name</th>
-                <th>Reference</th>
-                <th>Accounts</th>
-              </tr>
-            </thead>
-            <tbody>
-            {% for rolebinding in resources %}
-              <tr>
-                <td class="d-none d-sm-block">{{rolebinding["namespace"]}}</td>
-                <td>{{rolebinding["name"]}}</td>
-                <td>{{rolebinding["role_type"]}}:{{rolebinding["role_name"]}}</td>
-                <td><div class="column-text-left">
-                  {% for user in rolebinding["subjects"] %}
-                  <span class="badge badge-pill badge-info">{{user.kind}}/{{user.name}}</span></br>
-                  {% endfor %}
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-  </div>
-  {% endif %}
-  <div class="row">
-  {% for namespace in namespaces %}
-  <div class="col-12 text-center">
-  <div class="card">
-    <h5 class="card-header">{{namespace}}</h5>
-    <div class="card-body">
-      {% for rolebinding in resources %}
-      {% if rolebinding["namespace"] == namespace %}
-        <h5 class="card-title">{{rolebinding["name"]}}</h5>
-        <div class="row">
-        {% for user in rolebinding["subjects"] %}
-        <div class="col-4 text-center lessmargin">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">{{user.name}}</h5>
-              <p class="card-text"><small class="text-muted">{{user.kind}}</small></p>
+    {% for namespace in namespaces %}
+    <div class="col-12">
+    <div class="card">
+      <h2 class="card-header">{{namespace}}</h5>
+      <div class="card-body">
+        {% for rolebinding in resources %}
+        {% if rolebinding["namespace"] == namespace %}
+          <h3 class="card-title">{{rolebinding["name"]}}</h5>
+          <div class="row">
+          {% for user in rolebinding["subjects"] %}
+          <div class="col-4 text-center lessmargin">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{user.name}}</h5>
+                <p class="card-text"><small class="text-muted">{{user.kind}}</small></p>
+              </div>
             </div>
           </div>
+          {% endfor %}
         </div>
+        {% endif %}
         {% endfor %}
       </div>
-      {% endif %}
-      {% endfor %}
     </div>
-  </div>
-  </div>
-  {% endfor %}
-</div>
+    </div>
+    {% endfor %}
+    </div>
+  {% endif %}
+
 
 
 
