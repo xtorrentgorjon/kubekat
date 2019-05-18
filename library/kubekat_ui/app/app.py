@@ -128,7 +128,7 @@ def rbac_checker_call():
     rbac_list = list(json.loads(response_data.decode("utf-8")))
     app.logger.info('Received rbac list: %s', rbac_list)
 
-    namespaces = [rbac_item["namespaces"] for rbac_item in rbac_list]
+    namespaces = [rbac_item["namespace"] for rbac_item in rbac_list]
     namespaces = list(dict.fromkeys(a)) # Remove duplicates
 
     request_url = "http://"+request.host
