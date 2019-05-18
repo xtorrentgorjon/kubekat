@@ -56,12 +56,12 @@
   {% if resources|length > 0 %}
   <div class="container"> <!-- Matches should go here  -->
     <div class="row">
-      <div class="col text-left d-none d-md-block">
+      <div class="col text-left">
         <h2>List of Rolebindings</h2>
         <table class="table table-striped">
             <thead>
               <tr>
-                <th>Namespace</th>
+                <th class="d-block d-md-none">Namespace</th>
                 <th>Resource Name</th>
                 <th>Reference</th>
                 <th>Accounts</th>
@@ -70,7 +70,7 @@
             <tbody>
             {% for rolebinding in resources %}
               <tr>
-                <td>{{rolebinding["namespace"]}}</td>
+                <td class="d-block d-md-none">{{rolebinding["namespace"]}}</td>
                 <td>{{rolebinding["name"]}}</td>
                 <td>{{rolebinding["role_type"]}}:{{rolebinding["role_name"]}}</td>
                 <td><div class="column-text-left">
@@ -83,33 +83,6 @@
             </tbody>
           </table>
         </div>
-        <div class="col text-left d-block d-md-none">
-          <h2>List of Rolebindings</h2>
-          <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Resource Name</th>
-                  <th>Reference</th>
-                  <th>Accounts</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for rolebinding in resources %}
-                  <tr>
-                    <td>{{rolebinding["name"]}}</td>
-                    <td>{{rolebinding["role_type"]}}:{{rolebinding["role_name"]}}</td>
-                    <td><div class="column-text-left">
-                      {% for user in rolebinding["subjects"] %}
-                      <span class="badge badge-pill badge-info">{{user.kind}}/{{user.name}}</span></br>
-                      {% endfor %}
-                    </td>
-                  </tr>
-                  {% endfor %}
-              </tbody>
-            </table>
-
-      </div>
-    </div>
   </div>
   {% endif %}
 
