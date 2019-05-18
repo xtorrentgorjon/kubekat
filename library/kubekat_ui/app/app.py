@@ -128,12 +128,15 @@ def rbac_checker_call():
     rbac_list = list(json.loads(response_data.decode("utf-8")))
     app.logger.info('Received rbac list: %s', rbac_list)
 
+    namespaces = [rbac_item.namespaces for rbac_item in rbac_list]
+    namespaces = list(dict.fromkeys(a)) # Remove duplicates
+
     request_url = "http://"+request.host
     if (INGRESS_TLS):
         request_url = "https://"+request.host
 
     return render_template('index_rbac_checker.html', url=request_url,
-        version=VERSION, resources=rbac_list)
+        version=VERSION, resources=rbac_list, namespaces=namespaces)
 
 
 # Home page
