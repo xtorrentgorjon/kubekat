@@ -61,7 +61,7 @@
         <table class="table table-striped">
             <thead>
               <tr>
-                <th class="d-block d-md-none">Namespace</th>
+                <th class="d-none d-sm-block">Namespace</th>
                 <th>Resource Name</th>
                 <th>Reference</th>
                 <th>Accounts</th>
@@ -70,7 +70,7 @@
             <tbody>
             {% for rolebinding in resources %}
               <tr>
-                <td class="d-block d-md-none">{{rolebinding["namespace"]}}</td>
+                <td class="d-none d-sm-block">{{rolebinding["namespace"]}}</td>
                 <td>{{rolebinding["name"]}}</td>
                 <td>{{rolebinding["role_type"]}}:{{rolebinding["role_name"]}}</td>
                 <td><div class="column-text-left">
