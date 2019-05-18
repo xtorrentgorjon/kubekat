@@ -129,7 +129,7 @@ def rbac_checker_call():
     app.logger.info('Received rbac list: %s', rbac_list)
 
     namespaces = [rbac_item["namespace"] for rbac_item in rbac_list]
-    namespaces = list(dict.fromkeys(a)) # Remove duplicates
+    namespaces = list(dict.fromkeys(namespaces)) # Remove duplicates
 
     request_url = "http://"+request.host
     if (INGRESS_TLS):
