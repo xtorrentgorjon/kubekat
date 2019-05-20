@@ -70,7 +70,9 @@
     <div class="card" style="margin-bottom:5px;">
       <h4 class="card-header">{{namespace}}</h4>
       <div class="card-body" style="margin-bottom:5px;">
+        <ul class="list-group list-group-flush">
         {% for rolebinding in resources %}
+        <li class="list-group-item">
         {% if rolebinding["namespace"] == namespace %}
           <div class="row">
           <div class="col-12 col-md-6">
@@ -93,7 +95,9 @@
               </div>
             </div>
           </div>
-          {% endfor %}
+        </li>
+        {% endfor %}
+        </ul>
         </div>
         {% endif %}
         {% endfor %}
