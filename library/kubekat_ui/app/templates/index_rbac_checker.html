@@ -16,6 +16,14 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.extra.css') }}">
 
+  <style>
+  .lessmargin {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  </style>
+
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 </head>
 
@@ -53,65 +61,55 @@
     </div>
   </div>
 
+  <div class="container">
   {% if resources|length > 0 %}
-  <div class="container"> <!-- Matches should go here  -->
     <div class="row">
-      <div class="col text-left d-none d-md-block">
-        <h2>List of Rolebindings</h2>
-        <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Namespace</th>
-                <th>Resource Name</th>
-                <th>Reference</th>
-                <th>Accounts</th>
-              </tr>
-            </thead>
-            <tbody>
-            {% for rolebinding in resources %}
-              <tr>
-                <td>{{rolebinding["namespace"]}}</td>
-                <td>{{rolebinding["name"]}}</td>
-                <td>{{rolebinding["role_type"]}}:{{rolebinding["role_name"]}}</td>
-                <td><div class="column-text-left">
-                  {% for user in rolebinding["subjects"] %}
-                  <span class="badge badge-pill badge-info">{{user.kind}}/{{user.name}}</span></br>
-                  {% endfor %}
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+    <h2>Found RBAC configuration</h2>
+    <div class="col-12" style="margin-bottom:5px;">
+    {% for namespace in namespaces %}
+    <div class="card" style="margin-bottom:5px;">
+      <h4 class="card-header">{{namespace}}</h4>
+      <div class="card-body" style="margin-bottom:5px;">
+        <ul class="list-group list-group-flush">
+        {% for rolebinding in resources %}
+        {% if rolebinding["namespace"] == namespace %}
+        <li class="list-group-item">
+          <div class="row">
+          <div class="col-12 col-md-6">
+            <h5 class="card-title">{{rolebinding["name"]}}</h5>
+          </div>
+          <div class="col-12 col-md-6">
+            <h5 class="card-title text-right">
+              <span class="badge badge-info">{{rolebinding["role_type"]}}</span>
+              <span class="badge badge-primary">{{rolebinding["role_name"]}}</span>
+            </h5>
+          </div>
+          </div>
+          <div class="row" style="margin-bottom: 2px;">
+          {% for user in rolebinding["subjects"] %}
+          <div class="col-md-4 col-6 text-center lessmargin"style="margin-bottom: 5px;">
+            <div class="card h-100">
+              <div class="card-body bg-light" style="padding: 3px;">
+                <p class="card-title" style="margin-bottom: 3px;">{{user.name}}</p>
+                <p class="card-text text-right"><small class="text-primary">{{user.kind}}</small></p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
         </div>
-        <div class="col text-left d-block d-md-none">
-          <h2>List of Rolebindings</h2>
-          <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Resource Name</th>
-                  <th>Reference</th>
-                  <th>Accounts</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for rolebinding in resources %}
-                  <tr>
-                    <td>{{rolebinding["name"]}}</td>
-                    <td>{{rolebinding["role_type"]}}:{{rolebinding["role_name"]}}</td>
-                    <td><div class="column-text-left">
-                      {% for user in rolebinding["subjects"] %}
-                      <span class="badge badge-pill badge-info">{{user.kind}}/{{user.name}}</span></br>
-                      {% endfor %}
-                    </td>
-                  </tr>
-                  {% endfor %}
-              </tbody>
-            </table>
-
+        </li>
+        {% endif %}
+        {% endfor %}
+        </ul>
       </div>
     </div>
-  </div>
+    {% endfor %}
+    </div>
+    </div>
   {% endif %}
+  </div>
+
+
 
 
   <!-- Bootstrap core JavaScript -->
