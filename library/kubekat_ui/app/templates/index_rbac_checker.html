@@ -70,7 +70,7 @@
     <h2>Found RBAC configuration</h2>
     <div class="col-12" style="margin-bottom:5px;">
     {% for namespace in namespaces %}
-    <div class="card" style="margin-bottom:5px;">
+    <div class="card" id="card-{{namespace}}" style="margin-bottom:5px;">
       <h4 class="card-header">{{namespace}}</h4>
       <div class="card-body" style="margin-bottom:5px;">
         <ul class="list-group list-group-flush">
@@ -137,7 +137,7 @@
                   <td>{{namespace}}</td>
                   <td>
                     <div class="form-check">
-                      <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="checkbox-{{namespace}}" aria-label="...">
+                      <input class="form-check-input position-static active" type="checkbox" id="checkbox-{{namespace}}" value="checkbox-{{namespace}}" aria-label="...">
                     </div>
                   </td>
                 </tr>
@@ -159,6 +159,14 @@
   <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
+  <script>
+  $( ".form-check-input" ).click(function() {
+    var clicked_id = $(this).attr('id');
+    var namespace = clicked_id.split("-")[0];
+    var card_id = "#card-"+namespace
+    $(card_id).toggleClass("d-none")
+  });
+  </script>
 
 </body>
 
