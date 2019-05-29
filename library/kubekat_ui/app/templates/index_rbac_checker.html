@@ -40,6 +40,9 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
+            <a class="nav-link" data-toggle="modal" data-target="#rbacConfigModal" href="#rbacConfigModal">Config</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="about.html">About</a>
           </li>
         </ul>
@@ -67,7 +70,7 @@
     <h2>Found RBAC configuration</h2>
     <div class="col-12" style="margin-bottom:5px;">
     {% for namespace in namespaces %}
-    <div class="card" style="margin-bottom:5px;">
+    <div class="card" id="card-{{namespace}}" style="margin-bottom:5px;">
       <h4 class="card-header">{{namespace}}</h4>
       <div class="card-body" style="margin-bottom:5px;">
         <ul class="list-group list-group-flush">
@@ -85,11 +88,11 @@
             </h5>
           </div>
           </div>
-          <div class="row" style="margin-bottom: 2px;">
+          <div class="row" style="padding-bottom: 5px;">
           {% for user in rolebinding["subjects"] %}
-          <div class="col-md-4 col-6 text-center lessmargin"style="margin-bottom: 5px;">
+          <div class="col-md-4 col-6 text-center lessmargin">
             <div class="card h-100">
-              <div class="card-body bg-light" style="padding: 3px;">
+              <div class="card-body" style="padding: 3px;">
                 <p class="card-title" style="margin-bottom: 3px;">{{user.name}}</p>
                 <p class="card-text text-right"><small class="text-primary">{{user.kind}}</small></p>
               </div>
@@ -110,12 +113,62 @@
   </div>
 
 
+  <!-- Modal -->
+  <div class="modal fade" id="rbacConfigModal" tabindex="-1" role="dialog" aria-labelledby="rbacConfigModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="rbacConfigModalLabel">RBAC checker configuration</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>namespace</th>
+                  <th>show</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for namespace in namespaces %}
+                <tr>
+                  <td>{{namespace}}</td>
+                  <td>
+                    <div class="form-check">
+                      <input class="form-check-input position-static" type="checkbox" id="checkbox-{{namespace}}" value="checkbox-{{namespace}}" aria-label="..." checked>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
   <!-- Bootstrap core JavaScript -->
   <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
   <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
+  <script>
+  $( ".form-check-input" ).click(function() {
+    var clicked_id = $(this).attr('id');
+    console.log(clicked_id+" was just clicked");
+    var namespace = clicked_id.replace("checkbox-", "");
+    var card_id = "#card-"+namespace
+    console.log(card_id+" will be shown/hidden");
+    $(card_id).toggleClass("d-none")
+  });
+  </script>
 
 </body>
 
