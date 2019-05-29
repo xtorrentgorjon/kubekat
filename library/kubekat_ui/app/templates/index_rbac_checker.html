@@ -163,7 +163,7 @@
   $( ".form-check-input" ).click(function() {
     var clicked_id = $(this).attr('id');
     console.log(clicked_id+" was just clicked");
-    var namespace = clicked_id.split("-")[0];
+    var namespace = clicked_id.replace("checkbox-", "");
     var card_id = "#card-"+namespace
     console.log(card_id+" will be shown/hidden");
     $(card_id).toggleClass("d-none")
