@@ -128,12 +128,18 @@
               <thead>
                 <tr>
                   <th>namespace</th>
+                  <th>show</th>
                 </tr>
               </thead>
               <tbody>
               {% for namespace in namespaces %}
                 <tr>
                   <td>{{namespace}}</td>
+                  <td>
+                    <div class="form-check">
+                      <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="checkbox-{{namespace}}" aria-label="...">
+                    </div>
+                  </td>
                 </tr>
                 {% endfor %}
               </tbody>
