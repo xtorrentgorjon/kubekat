@@ -12,4 +12,4 @@ Application that checks for diverse information on kubernetes clusters:
 
 ## Contributing
 
-This project runs on a gitlab instance under [https://gitlab.home.sendotux.net/open/kubekat](https://gitlab.home.sendotux.net/open/kubekat). All commits on github are mirroring the work done there.
+This project runs on a gitlab instance under [https://gitlab.home.sendotux.net/open/kubekat](https://gitlab.home.sendotux.net/open/kubekat). All commits on github are mirroring the work done there. Feel free to reach via sendotux@gmail.com for questions!
